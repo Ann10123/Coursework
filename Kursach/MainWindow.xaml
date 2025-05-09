@@ -57,8 +57,8 @@
                     </WrapPanel>
                     <WrapPanel Orientation="Horizontal">
                         <Label Content="Білків:" FontSize="18" Margin="20,10"/>
-                        <TextBox x:Name="MinSquirrels" Width="150" Height="25" FontSize="15" Margin="35,10"/>
-                        <TextBox x:Name="MaxSquirrels" Width="150" Height="25" FontSize="15" Margin="40,10"/>
+                        <TextBox x:Name="MinProteins" Width="150" Height="25" FontSize="15" Margin="35,10"/>
+                        <TextBox x:Name="MaxProteins" Width="150" Height="25" FontSize="15" Margin="40,10"/>
                     </WrapPanel>
                     <WrapPanel Orientation="Horizontal">
                         <Label Content="Вуглеводів:" FontSize="18" Margin="20,0,10,0"/>
