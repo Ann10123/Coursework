@@ -26,7 +26,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="1. Вид дієти:" FontSize="18" VerticalAlignment="Center"/>
-                <ComboBox x:Name="myComboBox" Width="150" Height="25" Margin="10,0,0,0">
+                <ComboBox x:Name="myComboBox" Width="150" Height="25" Margin="10,0,0,0" SelectionChanged="myComboBox_SelectionChanged">
                     <ComboBoxItem Content="без обмежень"/>
                     <ComboBoxItem Content="кетодієта"/>
                     <ComboBoxItem Content="вегетеріанська"/>
@@ -35,6 +35,7 @@
                     <ComboBoxItem Content="рослинна"/>
                     <ComboBoxItem Content="веганська"/>
                     <ComboBoxItem Content="діабетична"/>
+                    <ComboBoxItem Content="білкова"/>
                 </ComboBox>
             </StackPanel>
 
