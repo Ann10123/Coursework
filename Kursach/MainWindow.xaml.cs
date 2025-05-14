@@ -1,5 +1,4 @@
-﻿using Kursach;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -10,12 +9,39 @@ namespace Kursach
 {
     public partial class MainWindow : Window
     {
-        private List<Product> _products;
-        private List<ProductSelection> _selectedProducts = new();
-        private DietType _selectedDietType = DietType.None;
-        private IDietFilter _dietFilter = new SimpleDietFilter();
+        public abstract class Product
+        {
+            public string Name { get; set; }
+            public double Calories { get; set; }
+            public double Proteins { get; set; }
+            public double Fats { get; set; }
+            public double Carbs { get; set; }
+            public double Price { get; set; }
+            public string ImagePath { get; set; }
+            public List<DietType> AllowedDiets { get; set; } = new List<DietType> {DietType.None};
+        }
+        public enum DietType
+        {
+            None, Keto, Vegetarian, Interval, Glutenfree, Plant, Vegan, Diet, Protein
+        }
 
-        private void AddProductBox_Click(object sender, RoutedEventArgs e)
+        public class Vegetable: Product { }
+        public class Fruit: Product { }
+        public class Сereals : Product { }
+        public class Seed : Product { }
+        public class Nuts : Product { }
+        public class Sweets : Product { }
+        public class Milk : Product { }
+        public class Bread : Product { }
+        public class Meat: Product { }
+        public class Fish: Product { }
+        public class Drink: Product { }
+
+        private List<Product> _products;
+        private List<Product> _selectedProducts = new();
+        private DietType _selectedDietType = DietType.None;
+
+        private void AddProductBox()
         {
             var row = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
             var comboBox = new ComboBox
@@ -48,7 +74,12 @@ namespace Kursach
 
             ProductListPanel.Children.Add(row);
         }
-        private void MyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void AddProductBox_Click(object sender, RoutedEventArgs e)
+        {
+            AddProductBox();
+        }
+        private void myComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = (ComboBoxItem)myComboBox.SelectedItem;
             switch (selectedItem.Content.ToString().ToLower())
@@ -158,13 +189,6 @@ namespace Kursach
                 new Drink { Name = "Вода мін. нег. 1л", Calories = 1, Proteins = 0, Fats = 0, Carbs = 0.1, Price = 2.3, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\negaz2.webp"},
                 new Drink { Name = "Вода мін. газ. 1л", Calories = 0.1, Proteins = 0, Fats = 0, Carbs = 0, Price = 2.5, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\gaz.png"},
             };
-        }
-        private List<Product> GenerateWeeklyBasket()
-        {
-            return _selectedProducts
-                .Where(p => _dietFilter.IsAllowed(p.Product, _selectedDietType))
-                .Select(p => p.Product)
-                .ToList();
         }
         public MainWindow()
         {
