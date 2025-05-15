@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Google.OrTools.LinearSolver;
+using Kursach;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,46 +12,18 @@ namespace Kursach
 {
     public partial class MainWindow : Window
     {
-        public abstract class Product
-        {
-            public string Name { get; set; }
-            public double Calories { get; set; }
-            public double Proteins { get; set; }
-            public double Fats { get; set; }
-            public double Carbs { get; set; }
-            public double Price { get; set; }
-            public string ImagePath { get; set; }
-            public List<DietType> AllowedDiets { get; set; } = new List<DietType> {DietType.None};
-        }
-        public enum DietType
-        {
-            None, Keto, Vegetarian, Interval, Glutenfree, Plant, Vegan, Diet, Protein
-        }
-
-        public class Vegetable: Product { }
-        public class Fruit: Product { }
-        public class Сereals : Product { }
-        public class Seed : Product { }
-        public class Nuts : Product { }
-        public class Sweets : Product { }
-        public class Milk : Product { }
-        public class Bread : Product { }
-        public class Meat: Product { }
-        public class Fish: Product { }
-        public class Drink: Product { }
-
         private List<Product> _products;
-        private List<Product> _selectedProducts = new();
+        private List<ProductSelection> _selectedProducts = new();
         private DietType _selectedDietType = DietType.None;
+        private IDietFilter _dietFilter = new SimpleDietFilter();
 
-        private void AddProductBox()
+        private void AddProductBox_Click(object sender, RoutedEventArgs e)
         {
             var row = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
             var comboBox = new ComboBox
             {
-                Width = 260,
-                Height = 75,
-                Margin = new Thickness(0,0,0,0),
+                Width = 260, Height = 75,
+                Margin = new Thickness(0, 0, 0, 0),
                 Background = Brushes.White,
                 Foreground = Brushes.Black,
                 ItemsSource = _products,
@@ -57,14 +32,12 @@ namespace Kursach
             };
             var minText = new TextBox
             {
-                Width = 100,
-                Height = 25,
+                Width = 100, Height = 25,
                 Margin = new Thickness(55, 0, 0, 0),
             };
             var maxText = new TextBox
             {
-                Width = 100,
-                Height = 25,
+                Width = 100, Height = 25,
                 Margin = new Thickness(110, 0, 0, 0),
             };
 
@@ -74,44 +47,236 @@ namespace Kursach
 
             ProductListPanel.Children.Add(row);
         }
-
-        private void AddProductBox_Click(object sender, RoutedEventArgs e)
-        {
-            AddProductBox();
-        }
-        private void myComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = (ComboBoxItem)myComboBox.SelectedItem;
             switch (selectedItem.Content.ToString().ToLower())
             {
                 case "без обмежень":
-                    _selectedDietType = DietType.None;
-                    break;
+                    _selectedDietType = DietType.None; break;
                 case "кетодієта":
-                    _selectedDietType = DietType.Keto;
-                    break;
+                    _selectedDietType = DietType.Keto; break;
                 case "вегетеріанська":
-                    _selectedDietType = DietType.Vegetarian;
-                    break;
+                    _selectedDietType = DietType.Vegetarian; break;
                 case "інтервальне":
-                    _selectedDietType = DietType.Interval;
-                    break;
+                    _selectedDietType = DietType.Interval; break;
                 case "безглютенова":
-                    _selectedDietType = DietType.Glutenfree;
-                    break;
+                    _selectedDietType = DietType.Glutenfree; break;
                 case "рослинна":
-                    _selectedDietType = DietType.Plant;
-                    break;
+                    _selectedDietType = DietType.Plant; break;
                 case "веганська":
-                    _selectedDietType = DietType.Vegan;
-                    break;
+                    _selectedDietType = DietType.Vegan; break;
                 case "діабетична":
-                    _selectedDietType = DietType.Diet;
-                    break;
+                    _selectedDietType = DietType.Diet; break;
                 case "білкова":
-                    _selectedDietType = DietType.Protein;
-                    break;
+                    _selectedDietType = DietType.Protein; break;
             }
+        }
+        private List<Product> GenerateWeeklyBasket()
+        {
+            List<Product> finalBasket = new();
+            double totalPrice = 0;
+            double totalCalories = 0;
+            double totalProteins = 0;
+            double totalFats = 0;
+            double totalCarbs = 0;
+
+            double.TryParse(MaxCost.Text, out double maxCost);
+            double.TryParse(MinCalories.Text, out double minCal);
+            double.TryParse(MaxCalories.Text, out double maxCal);
+            double.TryParse(MinProteins.Text, out double minProt);
+            double.TryParse(MaxProteins.Text, out double maxProt);
+            double.TryParse(MinFats.Text, out double minFats);
+            double.TryParse(MaxFats.Text, out double maxFats);
+            double.TryParse(MinСarbohydrates.Text, out double minCarbs);
+            double.TryParse(MaxСarbohydrates.Text, out double maxCarbs);
+
+            minCal *= 7;
+            maxCal *= 7;
+            minProt *= 7;
+            maxProt *= 7;
+            minFats *= 7;
+            maxFats *= 7;
+            minCarbs *= 7;
+            maxCarbs *= 7;
+
+            string productList = "Сформований кошик включає:\n";
+
+            foreach (var selection in _selectedProducts)
+            {
+                var product = selection.Product;
+
+                if (_dietFilter.IsAllowed(product, _selectedDietType) &&
+                    selection.MinGramsPerDay > 0 &&
+                    selection.MaxGramsPerDay >= selection.MinGramsPerDay)
+                {
+                    double avgGramsPerDay = (selection.MinGramsPerDay + selection.MaxGramsPerDay) / 2.0;
+                    double multiplier = avgGramsPerDay / 100.0;
+
+                    totalPrice += product.Price * multiplier;
+                    totalCalories += product.Calories * multiplier;
+                    totalProteins += product.Proteins * multiplier;
+                    totalFats += product.Fats * multiplier;
+                    totalCarbs += product.Carbs * multiplier;
+
+                    productList += $"- {product.Name} — {avgGramsPerDay:F0} г/тижд\n";
+                    finalBasket.Add(product);
+                }
+            }
+            var optionalProducts = _products
+                .Where(p => _dietFilter.IsAllowed(p, _selectedDietType) && !_selectedProducts.Any(sel => sel.Product == p))
+                .ToList();
+            var lpProducts = SolveWithLinearProgramming(optionalProducts, minCal, maxCal, minProt, maxProt, minFats, maxFats, minCarbs, maxCarbs, maxCost);
+            foreach (var product in lpProducts)
+            {
+                double multiplier = product.SelectedWeight / 100.0;
+                totalPrice += product.Price * multiplier;
+                totalCalories += product.Calories * multiplier;
+                totalProteins += product.Proteins * multiplier;
+                totalFats += product.Fats * multiplier;
+                totalCarbs += product.Carbs * multiplier;
+
+                productList += $"- {product.Name} — {product.SelectedWeight:F0} г/тижд (автодобір)\n";
+                finalBasket.Add(product);
+            }
+            productList += $"\n📊 Загальні показники на тиждень:\n";
+            productList += $"- Калорій: {totalCalories:F1} ккал\n";
+            productList += $"- Білків: {totalProteins:F1} г\n";
+            productList += $"- Жирів: {totalFats:F1} г\n";
+            productList += $"- Вуглеводів: {totalCarbs:F1} г\n";
+            productList += $"\n💵 Загальна ціна: {totalPrice:F2} грн.";
+
+            MessageBox.Show(productList, "Результати кошика");
+
+            return finalBasket;
+        }
+        private List<Product> SolveWithLinearProgramming(List<Product> products, double minCal, double maxCal, double minProt, double maxProt, double minFats, double maxFats, double minCarbs, double maxCarbs, double maxCost)
+        {
+            Solver solver = Solver.CreateSolver("GLOP");
+
+            Dictionary<Product, Variable> variables = new();
+
+            foreach (var product in products)
+            {
+                var variable = solver.MakeNumVar(0.0, double.PositiveInfinity, product.Name);
+                variables[product] = variable;
+            }
+
+            LinearExpr calExpr = null;
+            foreach (var kvp in variables)
+            {
+                var term = kvp.Value * kvp.Key.Calories / 100.0;
+                calExpr = calExpr == null ? term : calExpr + term;
+            }
+
+            if (calExpr != null)
+            {
+                solver.Add(calExpr >= minCal);
+                solver.Add(calExpr <= maxCal);
+            }
+
+            LinearExpr protExpr = null;
+            foreach (var kvp in variables)
+            {
+                var term = kvp.Value * kvp.Key.Proteins / 100.0;
+                protExpr = protExpr == null ? term : protExpr + term;
+            }
+
+            if (protExpr != null)
+            {
+                solver.Add(protExpr >= minCal);
+                solver.Add(protExpr <= maxCal);
+            }
+
+            LinearExpr fatsExpr = null;
+            foreach (var kvp in variables)
+            {
+                var term = kvp.Value * kvp.Key.Fats / 100.0;
+                fatsExpr = fatsExpr == null ? term : fatsExpr + term;
+            }
+
+            if (fatsExpr != null)
+            {
+                solver.Add(fatsExpr >= minCal);
+                solver.Add(fatsExpr <= maxCal);
+            }
+
+            LinearExpr carbsExpr = null;
+            foreach (var kvp in variables)
+            {
+                var term = kvp.Value * kvp.Key.Carbs / 100.0;
+                carbsExpr = carbsExpr == null ? term : carbsExpr + term;
+            }
+
+            if (carbsExpr != null)
+            {
+                solver.Add(carbsExpr >= minCal);
+                solver.Add(carbsExpr <= maxCal);
+            }
+
+            LinearExpr costExpr = null;
+            foreach (var kvp in variables)
+            {
+                var term = kvp.Value * kvp.Key.Price/ 100.0;
+                costExpr = costExpr == null ? term : costExpr + term;
+            }
+
+            if (costExpr != null)
+            {
+                solver.Add(costExpr >= minCal);
+                solver.Add(costExpr <= maxCal);
+            }
+
+            Objective objective = solver.Objective();
+            foreach (var (product, variable) in variables)
+            {
+                objective.SetCoefficient(variable, product.Price / 100.0);
+            }
+            objective.SetMinimization();
+
+            Solver.ResultStatus resultStatus = solver.Solve();
+            List<Product> result = new();
+            if (resultStatus == Solver.ResultStatus.OPTIMAL)
+            {
+                foreach (var (product, variable) in variables)
+                {
+                    double grams = variable.SolutionValue();
+                    if (grams > 1.0)
+                    {
+                        product.SelectedWeight = grams;
+                        result.Add(product);
+                    }
+                }
+            }
+            return result;
+        }
+
+        private void Result_Click(object sender, RoutedEventArgs e)
+        {
+            _selectedProducts.Clear();
+
+            foreach (var child in ProductListPanel.Children)
+            {
+                if (child is StackPanel panel && panel.Children.Count >= 3)
+                {
+                    var comboBox = panel.Children[0] as ComboBox;
+                    var minText = panel.Children[1] as TextBox;
+                    var maxText = panel.Children[2] as TextBox;
+
+                    if (comboBox?.SelectedItem is Product product &&
+                        double.TryParse(minText.Text, out var min) &&
+                        double.TryParse(maxText.Text, out var max))
+                    {
+                        _selectedProducts.Add(new ProductSelection
+                        {
+                            Product = product,
+                            MinGramsPerDay = min,
+                            MaxGramsPerDay = max
+                        });
+                    }
+                }
+            }
+            GenerateWeeklyBasket();
         }
         private void InitializeProducts()
         {
@@ -192,11 +357,11 @@ namespace Kursach
         }
         public MainWindow()
         {
-
             InitializeComponent();
             InitializeProducts();
         }
     }
 }
+
 
 
