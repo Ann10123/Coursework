@@ -1,4 +1,4 @@
-﻿using Google.OrTools.LinearSolver;
+using Google.OrTools.LinearSolver;
 using Kursach;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,8 @@ namespace Kursach
             var row = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
             var comboBox = new ComboBox
             {
-                Width = 260, Height = 75,
+                Width = 260,
+                Height = 75,
                 Margin = new Thickness(0, 0, 0, 0),
                 Background = Brushes.White,
                 Foreground = Brushes.Black,
@@ -32,12 +33,14 @@ namespace Kursach
             };
             var minText = new TextBox
             {
-                Width = 100, Height = 25,
+                Width = 100,
+                Height = 25,
                 Margin = new Thickness(55, 0, 0, 0),
             };
             var maxText = new TextBox
             {
-                Width = 100, Height = 25,
+                Width = 100,
+                Height = 25,
                 Margin = new Thickness(110, 0, 0, 0),
             };
 
@@ -88,17 +91,14 @@ namespace Kursach
             double.TryParse(MaxProteins.Text, out double maxProt);
             double.TryParse(MinFats.Text, out double minFats);
             double.TryParse(MaxFats.Text, out double maxFats);
-            double.TryParse(MinСarbohydrates.Text, out double minCarbs);
+            double.TryParse(MinCarbohydrates.Text, out double minCarbs);
             double.TryParse(MaxСarbohydrates.Text, out double maxCarbs);
 
-            minCal *= 7;
-            maxCal *= 7;
-            minProt *= 7;
-            maxProt *= 7;
-            minFats *= 7;
-            maxFats *= 7;
-            minCarbs *= 7;
-            maxCarbs *= 7;
+            // Переводимо все на тиждень
+            minCal *= 7; maxCal *= 7;
+            minProt *= 7; maxProt *= 7;
+            minFats *= 7; maxFats *= 7;
+            minCarbs *= 7; maxCarbs *= 7;
 
             string productList = "Сформований кошик включає:\n";
 
@@ -113,7 +113,7 @@ namespace Kursach
                     double avgGramsPerDay = (selection.MinGramsPerDay + selection.MaxGramsPerDay) / 2.0;
                     double multiplier = avgGramsPerDay / 100.0;
 
-                    totalPrice += product.Price * multiplier;
+                    totalPrice += product.Price * multiplier ;
                     totalCalories += product.Calories * multiplier;
                     totalProteins += product.Proteins * multiplier;
                     totalFats += product.Fats * multiplier;
@@ -123,10 +123,35 @@ namespace Kursach
                     finalBasket.Add(product);
                 }
             }
+
+            // Обчислення залишків для LP
+            double minCalLeft = minCal - totalCalories;
+            double maxCalLeft = Math.Max(0, maxCal - totalCalories);
+
+            double minProtLeft = minProt - totalProteins;
+            double maxProtLeft = Math.Max(0, maxProt - totalProteins);
+
+            double minFatsLeft = minFats - totalFats;
+            double maxFatsLeft = Math.Max(0, maxFats - totalFats);
+
+            double minCarbsLeft = minCarbs - totalCarbs;
+            double maxCarbsLeft = Math.Max(0, maxCarbs - totalCarbs);
+
+            double maxCostLeft = Math.Max(0, maxCost - totalPrice);
+
             var optionalProducts = _products
                 .Where(p => _dietFilter.IsAllowed(p, _selectedDietType) && !_selectedProducts.Any(sel => sel.Product == p))
                 .ToList();
-            var lpProducts = SolveWithLinearProgramming(optionalProducts, minCal, maxCal, minProt, maxProt, minFats, maxFats, minCarbs, maxCarbs, maxCost);
+
+            var lpProducts = SolveWithLinearProgramming(
+                optionalProducts,
+                minCalLeft, maxCalLeft,
+                minProtLeft, maxProtLeft,
+                minFatsLeft, maxFatsLeft,
+                minCarbsLeft, maxCarbsLeft,
+                maxCostLeft
+            );
+
             foreach (var product in lpProducts)
             {
                 double multiplier = product.SelectedWeight / 100.0;
@@ -139,6 +164,7 @@ namespace Kursach
                 productList += $"- {product.Name} — {product.SelectedWeight:F0} г/тижд (автодобір)\n";
                 finalBasket.Add(product);
             }
+
             productList += $"\n📊 Загальні показники на тиждень:\n";
             productList += $"- Калорій: {totalCalories:F1} ккал\n";
             productList += $"- Білків: {totalProteins:F1} г\n";
@@ -147,109 +173,108 @@ namespace Kursach
             productList += $"\n💵 Загальна ціна: {totalPrice:F2} грн.";
 
             MessageBox.Show(productList, "Результати кошика");
-
             return finalBasket;
         }
-        private List<Product> SolveWithLinearProgramming(List<Product> products, double minCal, double maxCal, double minProt, double maxProt, double minFats, double maxFats, double minCarbs, double maxCarbs, double maxCost)
+
+        private List<Product> SolveWithLinearProgramming(List<Product> products,
+            double minCal, double maxCal,
+            double minProt, double maxProt,
+            double minFats, double maxFats,
+            double minCarbs, double maxCarbs,
+            double maxCost)
         {
             Solver solver = Solver.CreateSolver("GLOP");
+            if (solver == null)
+            {
+                MessageBox.Show("Не вдалося ініціалізувати OR-Tools солвер.");
+                return new List<Product>();
+            }
 
             Dictionary<Product, Variable> variables = new();
 
+            // Кожен продукт — змінна: скільки грамів додати
             foreach (var product in products)
             {
                 var variable = solver.MakeNumVar(0.0, double.PositiveInfinity, product.Name);
                 variables[product] = variable;
             }
 
-            LinearExpr calExpr = null;
-            foreach (var kvp in variables)
+            void AddMinConstraint(Func<Product, double> selector, double min)
             {
-                var term = kvp.Value * kvp.Key.Calories / 100.0;
-                calExpr = calExpr == null ? term : calExpr + term;
+                if (min <= 0) return;
+
+                LinearExpr expr = null;
+                foreach (var kvp in variables)
+                {
+                    var term = kvp.Value * selector(kvp.Key) / 100.0;
+                    expr = expr == null ? term : expr + term;
+                }
+
+                if (expr != null)
+                {
+                    solver.Add(expr >= min);
+                }
             }
 
-            if (calExpr != null)
+            void AddMaxConstraint(Func<Product, double> selector, double max)
             {
-                solver.Add(calExpr >= minCal);
-                solver.Add(calExpr <= maxCal);
+                if (max <= 0) return;
+
+                LinearExpr expr = null;
+                foreach (var kvp in variables)
+                {
+                    var term = kvp.Value * selector(kvp.Key) / 100.0;
+                    expr = expr == null ? term : expr + term;
+                }
+
+                if (expr != null)
+                {
+                    solver.Add(expr <= max);
+                }
             }
 
-            LinearExpr protExpr = null;
-            foreach (var kvp in variables)
-            {
-                var term = kvp.Value * kvp.Key.Proteins / 100.0;
-                protExpr = protExpr == null ? term : protExpr + term;
-            }
+            // Додаємо всі обмеження
+            AddMinConstraint(p => p.Calories, minCal);
+            AddMaxConstraint(p => p.Calories, maxCal);
 
-            if (protExpr != null)
-            {
-                solver.Add(protExpr >= minCal);
-                solver.Add(protExpr <= maxCal);
-            }
+            AddMinConstraint(p => p.Proteins, minProt);
+            AddMaxConstraint(p => p.Proteins, maxProt);
 
-            LinearExpr fatsExpr = null;
-            foreach (var kvp in variables)
-            {
-                var term = kvp.Value * kvp.Key.Fats / 100.0;
-                fatsExpr = fatsExpr == null ? term : fatsExpr + term;
-            }
+            AddMinConstraint(p => p.Fats, minFats);
+            AddMaxConstraint(p => p.Fats, maxFats);
 
-            if (fatsExpr != null)
-            {
-                solver.Add(fatsExpr >= minCal);
-                solver.Add(fatsExpr <= maxCal);
-            }
+            AddMinConstraint(p => p.Carbs, minCarbs);
+            AddMaxConstraint(p => p.Carbs, maxCarbs);
 
-            LinearExpr carbsExpr = null;
-            foreach (var kvp in variables)
-            {
-                var term = kvp.Value * kvp.Key.Carbs / 100.0;
-                carbsExpr = carbsExpr == null ? term : carbsExpr + term;
-            }
+            AddMaxConstraint(p => p.Price, maxCost);
 
-            if (carbsExpr != null)
-            {
-                solver.Add(carbsExpr >= minCal);
-                solver.Add(carbsExpr <= maxCal);
-            }
-
-            LinearExpr costExpr = null;
-            foreach (var kvp in variables)
-            {
-                var term = kvp.Value * kvp.Key.Price/ 100.0;
-                costExpr = costExpr == null ? term : costExpr + term;
-            }
-
-            if (costExpr != null)
-            {
-                solver.Add(costExpr >= minCal);
-                solver.Add(costExpr <= maxCal);
-            }
-
+            // Ціль: мінімізувати вартість
             Objective objective = solver.Objective();
             foreach (var (product, variable) in variables)
             {
-                objective.SetCoefficient(variable, product.Price / 100.0);
+                objective.SetCoefficient(variable, product.Price / 100.0); // грн за 100 г
             }
             objective.SetMinimization();
 
             Solver.ResultStatus resultStatus = solver.Solve();
             List<Product> result = new();
+
             if (resultStatus == Solver.ResultStatus.OPTIMAL)
             {
                 foreach (var (product, variable) in variables)
                 {
                     double grams = variable.SolutionValue();
-                    if (grams > 1.0)
+                    if (grams >= 1.0)
                     {
                         product.SelectedWeight = grams;
                         result.Add(product);
                     }
                 }
             }
+
             return result;
         }
+
 
         private void Result_Click(object sender, RoutedEventArgs e)
         {
@@ -362,6 +387,8 @@ namespace Kursach
         }
     }
 }
+
+
 
 
 

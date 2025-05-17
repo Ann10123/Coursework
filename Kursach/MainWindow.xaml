@@ -63,7 +63,7 @@
                     </WrapPanel>
                     <WrapPanel Orientation="Horizontal">
                         <Label Content="Вуглеводів:" FontSize="18" Margin="20,0,10,0"/>
-                        <TextBox x:Name="MinСarbohydrates" Width="150" Height="25" FontSize="15" Margin="5,0"/>
+                        <TextBox x:Name="MinCarbohydrates" Width="150" Height="25" FontSize="15" Margin="5,0"/>
                         <TextBox x:Name="MaxСarbohydrates" Width="150" Height="25" FontSize="15" Margin="70,0"/>
                     </WrapPanel>
 

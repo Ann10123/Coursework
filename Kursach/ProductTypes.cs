@@ -18,3 +18,4 @@ namespace Kursach
     public class Fish : Product { public override string GetCategory() => "Риба"; }
     public class Drink : Product { public override string GetCategory() => "Напої"; }
 }
+
