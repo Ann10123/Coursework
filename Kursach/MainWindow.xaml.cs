@@ -35,18 +35,27 @@ namespace Kursach
             {
                 Width = 100,
                 Height = 25,
-                Margin = new Thickness(55, 0, 0, 0),
+                Margin = new Thickness(40, 0, 0, 0),
             };
             var maxText = new TextBox
             {
                 Width = 100,
                 Height = 25,
-                Margin = new Thickness(110, 0, 0, 0),
+                Margin = new Thickness(90, 0, 0, 0),
             };
+            var deleteButton = new Button
+            {
+                Content = "❌",
+                Width = 25,
+                Height = 25,
+                Margin = new Thickness(50, 0, 0, 0)
+            };
+            deleteButton.Click += (s, ev) => ProductListPanel.Children.Remove(row);
 
             row.Children.Add(comboBox);
             row.Children.Add(minText);
             row.Children.Add(maxText);
+            row.Children.Add(deleteButton);
 
             ProductListPanel.Children.Add(row);
         }
@@ -176,14 +185,14 @@ namespace Kursach
                 totalFats += product.Fats * multiplier;
                 totalCarbs += product.Carbs * multiplier;
 
-                productList += $"- {product.Name} — {product.SelectedWeight:F2} г/тижд (автодобір)\n";
+                productList += $"- {product.Name} — {product.SelectedWeight:F2} г/тижд\n";
                 finalBasket.Add(product);
             }
 
             productList += $"\n📊 Загальні показники на тиждень:\n";
             productList += $"- Калорій: {totalCalories:F2} ккал\n";
-            productList += $"- Білків: {totalProteins:F1} г\n";
             productList += $"- Жирів: {totalFats:F1} г\n";
+            productList += $"- Білків: {totalProteins:F1} г\n";
             productList += $"- Вуглеводів: {totalCarbs:F1} г\n";
             productList += $"\n💵 Загальна ціна: {totalPrice:F2} грн.";
 
