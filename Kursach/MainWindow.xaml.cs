@@ -84,16 +84,31 @@ namespace Kursach
             double totalFats = 0;
             double totalCarbs = 0;
 
-            double.TryParse(MaxCost.Text, out double maxCost);
-            double.TryParse(MinCalories.Text, out double minCal);
-            double.TryParse(MaxCalories.Text, out double maxCal);
-            double.TryParse(MinProteins.Text, out double minProt);
-            double.TryParse(MaxProteins.Text, out double maxProt);
-            double.TryParse(MinFats.Text, out double minFats);
-            double.TryParse(MaxFats.Text, out double maxFats);
-            double.TryParse(MinCarbohydrates.Text, out double minCarbs);
-            double.TryParse(MaxСarbohydrates.Text, out double maxCarbs);
-
+            if (!double.TryParse(MaxCost.Text, out double maxCost))
+            {
+                MessageBox.Show("Невірно задано максимальний бюджет. Введіть коректне значення!");
+                return new List<Product>();
+            }
+            if (!double.TryParse(MinCalories.Text, out double minCal) || !double.TryParse(MaxCalories.Text, out double maxCal))
+            {
+                MessageBox.Show($"Невірно задане значення для калорій. Введіть коректне значення!");
+                return new List<Product>();
+            }
+            if (!double.TryParse(MinProteins.Text, out double minProt) || !double.TryParse(MaxProteins.Text, out double maxProt))
+            {
+                MessageBox.Show($"Невірно задане значення для білків. Введіть коректне значення!");
+                return new List<Product>();
+            }
+            if (!double.TryParse(MinFats.Text, out double minFats) || !double.TryParse(MaxFats.Text, out double maxFats))
+            {
+                MessageBox.Show($"Невірно задане значення для жирів. Введіть коректне значення!");
+                return new List<Product>();
+            } 
+            if (!double.TryParse(MinCarbohydrates.Text, out double minCarbs) || !double.TryParse(MaxСarbohydrates.Text, out double maxCarbs))
+            {
+                MessageBox.Show($"Невірно задане значення для вуглеводів. Введіть коректне значення!");
+                return new List<Product>();
+            }
             // Переводимо все на тиждень
             minCal *= 7; maxCal *= 7;
             minProt *= 7; maxProt *= 7;
@@ -107,7 +122,7 @@ namespace Kursach
                 var product = selection.Product;
 
                 if (_dietFilter.IsAllowed(product, _selectedDietType) &&
-                    selection.MinGramsPerDay > 0 &&
+                    selection.MinGramsPerDay >= 0 &&
                     selection.MaxGramsPerDay >= selection.MinGramsPerDay)
                 {
                     double avgGramsPerDay = (selection.MinGramsPerDay + selection.MaxGramsPerDay) / 2.0;
@@ -125,16 +140,16 @@ namespace Kursach
             }
 
             // Обчислення залишків для LP
-            double minCalLeft = minCal - totalCalories;
+            double minCalLeft = Math.Max(0, minCal - totalCalories);
             double maxCalLeft = Math.Max(0, maxCal - totalCalories);
 
-            double minProtLeft = minProt - totalProteins;
+            double minProtLeft = Math.Max(0, minProt - totalProteins);
             double maxProtLeft = Math.Max(0, maxProt - totalProteins);
 
-            double minFatsLeft = minFats - totalFats;
+            double minFatsLeft = Math.Max(0, minFats - totalFats);
             double maxFatsLeft = Math.Max(0, maxFats - totalFats);
 
-            double minCarbsLeft = minCarbs - totalCarbs;
+            double minCarbsLeft = Math.Max(0, minCarbs - totalCarbs);
             double maxCarbsLeft = Math.Max(0, maxCarbs - totalCarbs);
 
             double maxCostLeft = Math.Max(0, maxCost - totalPrice);
@@ -161,12 +176,12 @@ namespace Kursach
                 totalFats += product.Fats * multiplier;
                 totalCarbs += product.Carbs * multiplier;
 
-                productList += $"- {product.Name} — {product.SelectedWeight:F0} г/тижд (автодобір)\n";
+                productList += $"- {product.Name} — {product.SelectedWeight:F2} г/тижд (автодобір)\n";
                 finalBasket.Add(product);
             }
 
             productList += $"\n📊 Загальні показники на тиждень:\n";
-            productList += $"- Калорій: {totalCalories:F1} ккал\n";
+            productList += $"- Калорій: {totalCalories:F2} ккал\n";
             productList += $"- Білків: {totalProteins:F1} г\n";
             productList += $"- Жирів: {totalFats:F1} г\n";
             productList += $"- Вуглеводів: {totalCarbs:F1} г\n";
@@ -177,11 +192,11 @@ namespace Kursach
         }
 
         private List<Product> SolveWithLinearProgramming(List<Product> products,
-            double minCal, double maxCal,
-            double minProt, double maxProt,
-            double minFats, double maxFats,
-            double minCarbs, double maxCarbs,
-            double maxCost)
+            double minCalLeft, double maxCalLeft,
+            double minProtLeft, double maxProtLeft,
+            double minFatsLeft, double maxFatsLeft,
+            double minCarbsLeft, double maxCarbsLeft,
+            double maxCostLeft)
         {
             Solver solver = Solver.CreateSolver("GLOP");
             if (solver == null)
@@ -201,7 +216,7 @@ namespace Kursach
 
             void AddMinConstraint(Func<Product, double> selector, double min)
             {
-                if (min <= 0) return;
+                if (min < 0) return;
 
                 LinearExpr expr = null;
                 foreach (var kvp in variables)
@@ -234,25 +249,25 @@ namespace Kursach
             }
 
             // Додаємо всі обмеження
-            AddMinConstraint(p => p.Calories, minCal);
-            AddMaxConstraint(p => p.Calories, maxCal);
+            AddMinConstraint(p => p.Calories, minCalLeft);
+            AddMaxConstraint(p => p.Calories, maxCalLeft);
 
-            AddMinConstraint(p => p.Proteins, minProt);
-            AddMaxConstraint(p => p.Proteins, maxProt);
+            AddMinConstraint(p => p.Proteins, minProtLeft);
+            AddMaxConstraint(p => p.Proteins, maxProtLeft);
 
-            AddMinConstraint(p => p.Fats, minFats);
-            AddMaxConstraint(p => p.Fats, maxFats);
+            AddMinConstraint(p => p.Fats, minFatsLeft);
+            AddMaxConstraint(p => p.Fats, maxFatsLeft);
 
-            AddMinConstraint(p => p.Carbs, minCarbs);
-            AddMaxConstraint(p => p.Carbs, maxCarbs);
+            AddMinConstraint(p => p.Carbs, minCarbsLeft);
+            AddMaxConstraint(p => p.Carbs, maxCarbsLeft);
 
-            AddMaxConstraint(p => p.Price, maxCost);
+            AddMaxConstraint(p => p.Price, maxCostLeft);
 
             // Ціль: мінімізувати вартість
             Objective objective = solver.Objective();
             foreach (var (product, variable) in variables)
             {
-                objective.SetCoefficient(variable, product.Price / 100.0); // грн за 100 г
+                objective.SetCoefficient(variable, product.Price); 
             }
             objective.SetMinimization();
 
@@ -264,7 +279,7 @@ namespace Kursach
                 foreach (var (product, variable) in variables)
                 {
                     double grams = variable.SolutionValue();
-                    if (grams >= 1.0)
+                    if (grams >= 0.1)
                     {
                         product.SelectedWeight = grams;
                         result.Add(product);
@@ -288,10 +303,18 @@ namespace Kursach
                     var minText = panel.Children[1] as TextBox;
                     var maxText = panel.Children[2] as TextBox;
 
-                    if (comboBox?.SelectedItem is Product product &&
-                        double.TryParse(minText.Text, out var min) &&
-                        double.TryParse(maxText.Text, out var max))
+                    if (comboBox?.SelectedItem is Product product)
                     {
+                        if (!double.TryParse(minText.Text, out var min) || !double.TryParse(maxText.Text, out var max))
+                        {
+                            MessageBox.Show($"Невірний формат грамів у полі для продукту {product.Name}. Введіть коректні значення!");
+                            return;
+                        }
+                        if (min < 0 || max < 0 || max < min)
+                        {
+                            MessageBox.Show($"Некоректні межі грамів для продукту {product.Name}. Введіть коректні межі!");
+                            return;
+                        }
                         _selectedProducts.Add(new ProductSelection
                         {
                             Product = product,
@@ -352,7 +375,7 @@ namespace Kursach
                 new Milk { Name = "Мигдальне молоко", Calories = 24, Proteins = 0.5, Fats = 1.2, Carbs = 2.6, Price = 16.9, AllowedDiets = new List<DietType> { DietType.Vegetarian, DietType.Protein, DietType.Glutenfree, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\almond_milk.jpg"},
                 new Milk { Name = "Вівсяне молоко", Calories = 44, Proteins = 0.3, Fats = 1.5, Carbs = 6.8, Price = 14.9, AllowedDiets = new List<DietType> { DietType.Vegetarian, DietType.Protein, DietType.Glutenfree, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\moloko-vivsyane.webp"},
                 new Milk { Name = "Кисломолочний сир 5%", Calories = 84, Proteins = 18, Fats = 0.6, Carbs = 1.8, Price = 26.8, AllowedDiets = new List<DietType> { DietType.Vegetarian, DietType.Protein, DietType.Glutenfree, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tvorog-kislomolochnyj.jpg"},
-                new Milk { Name = "Яйця 10шт.", Calories = 83, Proteins = 6.8, Fats = 6, Carbs = 0.5, Price = 14.6, AllowedDiets = new List<DietType> { DietType.Vegetarian, DietType.Protein, DietType.Glutenfree, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\eggs.jpg"},
+                new Milk { Name = "Яйця", Calories = 83, Proteins = 6.8, Fats = 6, Carbs = 0.5, Price = 14.6, AllowedDiets = new List<DietType> { DietType.Vegetarian, DietType.Protein, DietType.Glutenfree, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\eggs.jpg"},
                 new Milk { Name = "Сир Філадельфія", Calories = 342, Proteins = 5.9, Fats = 34.2, Carbs = 4.1, Price = 36, AllowedDiets = new List<DietType> { DietType.Vegetarian, DietType.Protein, DietType.Glutenfree, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\philadelfia.webp"},
                 new Milk { Name = "Сир Фета", Calories = 290, Proteins = 17, Fats = 24, Carbs = 2.9, Price = 44.6, AllowedDiets = new List<DietType> { DietType.Vegetarian, DietType.Protein, DietType.Glutenfree, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\feta.jpg"},
                 new Milk { Name = "Сир Гауда", Calories = 344, Proteins = 26, Fats = 26, Carbs = 1.4, Price = 52.9, AllowedDiets = new List<DietType> { DietType.Vegetarian, DietType.Protein, DietType.Glutenfree, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\gauda.jpg"},
@@ -375,7 +398,7 @@ namespace Kursach
                 new Fish { Name = "Стейки форелі", Calories = 99, Proteins = 19.6, Fats = 2.1, Carbs = 0, Price = 87.9, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\forel.png"},
                 new Fish { Name = "Філе тунця", Calories = 96, Proteins = 22.7, Fats = 0.7, Carbs = 0, Price = 71.9, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tuna.png"},
                 new Drink { Name = "Сік 1л", Calories = 54, Proteins = 1.1, Fats = 0.1, Carbs = 10, Price = 9.4, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\soksandoramultivitamin.jpg"},
-                new Drink { Name = "Солодкі напої 1л", Calories = 42, Proteins = 0, Fats = 0, Carbs = 10.6, Price = 5.4, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\pepsi.webp"},
+                new Drink { Name = "Солодкі напої 1л", Calories = 42, Proteins = 0, Fats = 0, Carbs = 10.6, Price = 5.4, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\pepsi.webp"},
                 new Drink { Name = "Вода мін. нег. 1л", Calories = 1, Proteins = 0, Fats = 0, Carbs = 0.1, Price = 2.3, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\negaz2.webp"},
                 new Drink { Name = "Вода мін. газ. 1л", Calories = 0.1, Proteins = 0, Fats = 0, Carbs = 0, Price = 2.5, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\gaz.png"},
             };
