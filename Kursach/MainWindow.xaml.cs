@@ -17,6 +17,7 @@ namespace Kursach
         private DietType _selectedDietType = DietType.None;
         private IDietFilter _dietFilter = new SimpleDietFilter();
 
+        //додавання полів для обов'язкового продукту
         private void AddProductBox_Click(object sender, RoutedEventArgs e)
         {
             var row = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
@@ -93,39 +94,52 @@ namespace Kursach
             double totalFats = 0;
             double totalCarbs = 0;
 
-            if (!double.TryParse(MaxCost.Text, out double maxCost))
+            //перевірки на правильність введених значень
+            if (!double.TryParse(MinCalories.Text, out double minCal) || !double.TryParse(MaxCalories.Text, out double maxCal) || minCal < 0 || maxCal < 0 ||
+                !double.TryParse(MinProteins.Text, out double minProt) || !double.TryParse(MaxProteins.Text, out double maxProt) || minProt < 0 || maxProt < 0 ||
+                !double.TryParse(MinFats.Text, out double minFats) || !double.TryParse(MaxFats.Text, out double maxFats) || minFats < 0 || maxFats < 0 ||
+                !double.TryParse(MinCarbohydrates.Text, out double minCarbs) || !double.TryParse(MaxСarbohydrates.Text, out double maxCarbs) || minCarbs < 0 || maxCarbs < 0)
             {
-                MessageBox.Show("Невірно задано максимальний бюджет. Введіть коректне значення!");
+                MessageBox.Show("Невірно задані значення КБЖУ!\n" +
+                    "Введіть числові значення > 0.");
                 return new List<Product>();
             }
-            if (!double.TryParse(MinCalories.Text, out double minCal) || !double.TryParse(MaxCalories.Text, out double maxCal))
+            if(!double.TryParse(MaxCost.Text, out double maxCost) || maxCost < 0)
             {
-                MessageBox.Show($"Невірно задане значення для калорій. Введіть коректне значення!");
+                MessageBox.Show("Невірно заданий максимальний бюджет!\n" +
+                    "Введіть числове значення > 0.");
                 return new List<Product>();
             }
-            if (!double.TryParse(MinProteins.Text, out double minProt) || !double.TryParse(MaxProteins.Text, out double maxProt))
+            if (minCal > maxCal || minProt > maxProt || minFats > maxFats || minCarbs > maxCarbs)
             {
-                MessageBox.Show($"Невірно задане значення для білків. Введіть коректне значення!");
+                MessageBox.Show("Невірно задані межі КБЖУ!\n" +
+                    "Мінімальна к-сть не може бути більше за максимальну к-сть!");
                 return new List<Product>();
             }
-            if (!double.TryParse(MinFats.Text, out double minFats) || !double.TryParse(MaxFats.Text, out double maxFats))
+            if (minCal == 0 && minProt == 0 && minFats == 0 && minCarbs == 0 && _selectedProducts.Count == 0)
             {
-                MessageBox.Show($"Невірно задане значення для жирів. Введіть коректне значення!");
-                return new List<Product>();
-            } 
-            if (!double.TryParse(MinCarbohydrates.Text, out double minCarbs) || !double.TryParse(MaxСarbohydrates.Text, out double maxCarbs))
-            {
-                MessageBox.Show($"Невірно задане значення для вуглеводів. Введіть коректне значення!");
-                return new List<Product>();
+                var result = MessageBox.Show(
+                    "Ви не задали жодних мінімальних значень КБЖУ.\n" +
+                    "Можливий результат - порожній кошик. Бажаєте продовжити?",
+                    "Попередження",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                );
+                if (result == MessageBoxResult.No)
+                {
+                    return new List<Product>();
+                }
             }
-            // Переводимо все на тиждень
+
+            // Переведення всіх обмежень на тиждень
             minCal *= 7; maxCal *= 7;
             minProt *= 7; maxProt *= 7;
             minFats *= 7; maxFats *= 7;
             minCarbs *= 7; maxCarbs *= 7;
+             
+            string productList = "Включає такі продукти:\n";
 
-            string productList = "Сформований кошик включає:\n";
-
+            //обрахунок обов'язкових продуктів
             foreach (var selection in _selectedProducts)
             {
                 var product = selection.Product;
@@ -134,8 +148,23 @@ namespace Kursach
                     selection.MinGramsPerDay >= 0 &&
                     selection.MaxGramsPerDay >= selection.MinGramsPerDay)
                 {
-                    double avgGramsPerDay = (selection.MinGramsPerDay + selection.MaxGramsPerDay) / 2.0;
-                    double multiplier = avgGramsPerDay / 100.0;
+                    // Залишки КБЖУ
+                    double calLeft = maxCal - totalCalories;
+                    double protLeft = maxProt - totalProteins;
+                    double fatsLeft = maxFats - totalFats;
+                    double carbsLeft = maxCarbs - totalCarbs;
+
+                    // Обчислити максимально допустиму кількість в межах КБЖВ
+                    double maxByCal = product.Calories > 0 ? calLeft / product.Calories * 100 : selection.MaxGramsPerDay;
+                    double maxByProt = product.Proteins > 0 ? protLeft / product.Proteins * 100 : selection.MaxGramsPerDay;
+                    double maxByFats = product.Fats > 0 ? fatsLeft / product.Fats * 100 : selection.MaxGramsPerDay;
+                    double maxByCarbs = product.Carbs > 0 ? carbsLeft / product.Carbs * 100 : selection.MaxGramsPerDay;
+
+                    // Вибрати максимально можливу вагу, що не перевищує max і не менше min
+                    double selectedGrams = Math.Min(Math.Min(maxByCal, maxByProt), Math.Min(maxByFats, maxByCarbs));
+                    selectedGrams = Math.Clamp(selectedGrams, selection.MinGramsPerDay, selection.MaxGramsPerDay);
+
+                    double multiplier = selectedGrams / 100.0;
 
                     totalPrice += product.Price * multiplier ;
                     totalCalories += product.Calories * multiplier;
@@ -143,7 +172,7 @@ namespace Kursach
                     totalFats += product.Fats * multiplier;
                     totalCarbs += product.Carbs * multiplier;
 
-                    productList += $"- {product.Name} — {avgGramsPerDay:F0} г/тижд\n";
+                    productList += $"- {product.Name} — {selectedGrams:F0} г/тижд\n";
                     finalBasket.Add(product);
                 }
             }
@@ -185,10 +214,9 @@ namespace Kursach
                 totalFats += product.Fats * multiplier;
                 totalCarbs += product.Carbs * multiplier;
 
-                productList += $"- {product.Name} — {product.SelectedWeight:F2} г/тижд\n";
+                productList += $"- {product.Name} — {product.SelectedWeight:F0} г/тижд\n";
                 finalBasket.Add(product);
             }
-
             productList += $"\n📊 Загальні показники на тиждень:\n";
             productList += $"- Калорій: {totalCalories:F2} ккал\n";
             productList += $"- Жирів: {totalFats:F1} г\n";
@@ -196,8 +224,8 @@ namespace Kursach
             productList += $"- Вуглеводів: {totalCarbs:F1} г\n";
             productList += $"\n💵 Загальна ціна: {totalPrice:F2} грн.";
 
-            MessageBox.Show(productList, "Результати кошика");
-            return finalBasket;
+            MessageBox.Show(productList, "🛍️ Сформований кошик:");
+            return finalBasket;  
         }
 
         private List<Product> SolveWithLinearProgramming(List<Product> products,
@@ -222,11 +250,10 @@ namespace Kursach
                 var variable = solver.MakeNumVar(0.0, double.PositiveInfinity, product.Name);
                 variables[product] = variable;
             }
-
+            //обмеження по мінімуму
             void AddMinConstraint(Func<Product, double> selector, double min)
             {
                 if (min < 0) return;
-
                 LinearExpr expr = null;
                 foreach (var kvp in variables)
                 {
@@ -239,7 +266,7 @@ namespace Kursach
                     solver.Add(expr >= min);
                 }
             }
-
+            //обмеження по максимуму
             void AddMaxConstraint(Func<Product, double> selector, double max)
             {
                 if (max <= 0) return;
@@ -257,7 +284,7 @@ namespace Kursach
                 }
             }
 
-            // Додаємо всі обмеження
+            // Всі обмеження
             AddMinConstraint(p => p.Calories, minCalLeft);
             AddMaxConstraint(p => p.Calories, maxCalLeft);
 
@@ -272,7 +299,7 @@ namespace Kursach
 
             AddMaxConstraint(p => p.Price, maxCostLeft);
 
-            // Ціль: мінімізувати вартість
+            // Мінімізація вартості
             Objective objective = solver.Objective();
             foreach (var (product, variable) in variables)
             {
@@ -295,11 +322,12 @@ namespace Kursach
                     }
                 }
             }
-
+            else if (resultStatus == Solver.ResultStatus.INFEASIBLE)
+            {
+                MessageBox.Show($"Додаткові продукти не знайдено, занадто вузькі межі КБЖУ");
+            }
             return result;
         }
-
-
         private void Result_Click(object sender, RoutedEventArgs e)
         {
             _selectedProducts.Clear();
