@@ -3,22 +3,82 @@ using Kursach;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Kursach
 {
     public partial class MainWindow : Window
     {
-        private List<Product> _products;
-        private List<ProductSelection> _selectedProducts = new();
-        private DietType _selectedDietType = DietType.None;
-        private IDietFilter _dietFilter = new SimpleDietFilter();
+        public List<Product> _products;
+        public List<ProductSelection> _selectedProducts = new();
+        public DietType _selectedDietType = DietType.None;
+        public IDietFilter _dietFilter = new SimpleDietFilter();
 
-        //додавання полів для обов'язкового продукту
-        private void AddProductBox_Click(object sender, RoutedEventArgs e)
+        public void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            //Дозволяє на введення лише цифр і коми
+            Regex regex = new Regex("[^0-9,]");
+            var textBox = sender as TextBox;
+            string currentText = textBox?.Text ?? "";
+
+            if (regex.IsMatch(e.Text))
+            {
+                e.Handled = true;
+                return;
+            }
+            // Перевірка на наявність коми
+            if (e.Text == ",")
+            {
+                if (currentText.Contains(","))
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+        }
+
+        //перевірка на порожні поля
+        public bool AreAllTextBoxesFilled(DependencyObject parent)
+        {
+            bool allFilled = true;
+
+            int childCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is TextBox textBox)
+                {
+                    if (string.IsNullOrWhiteSpace(textBox.Text))
+                    {
+                        textBox.BorderBrush = Brushes.Red;
+                        textBox.BorderThickness = new Thickness(2);
+                        allFilled = false;
+                    }
+                    else
+                    {
+                        textBox.ClearValue(TextBox.BorderBrushProperty);
+                        textBox.ClearValue(TextBox.BorderThicknessProperty);
+                    }
+                }
+
+                // рекурсивний виклик
+                if (!AreAllTextBoxesFilled(child))
+                {
+                    allFilled = false;
+                }
+            }
+
+            return allFilled;
+        }
+
+        //додавання полів для обов'язкових продуктів
+        public void AddProductBox_Click(object sender, RoutedEventArgs e)
         {
             var row = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
             var comboBox = new ComboBox
@@ -38,12 +98,14 @@ namespace Kursach
                 Height = 25,
                 Margin = new Thickness(40, 0, 0, 0),
             };
+            minText.PreviewTextInput += NumberOnly_PreviewTextInput;
             var maxText = new TextBox
             {
                 Width = 100,
                 Height = 25,
                 Margin = new Thickness(90, 0, 0, 0),
             };
+            maxText.PreviewTextInput += NumberOnly_PreviewTextInput;
             var deleteButton = new Button
             {
                 Content = "❌",
@@ -60,7 +122,7 @@ namespace Kursach
 
             ProductListPanel.Children.Add(row);
         }
-        private void MyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void MyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = (ComboBoxItem)myComboBox.SelectedItem;
             switch (selectedItem.Content.ToString().ToLower())
@@ -85,7 +147,7 @@ namespace Kursach
                     _selectedDietType = DietType.Protein; break;
             }
         }
-        private List<Product> GenerateWeeklyBasket()
+        public List<Product> GenerateWeeklyBasket()
         {
             List<Product> finalBasket = new();
             double totalPrice = 0;
@@ -94,28 +156,21 @@ namespace Kursach
             double totalFats = 0;
             double totalCarbs = 0;
 
-            //перевірки на правильність введених значень
-            if (!double.TryParse(MinCalories.Text, out double minCal) || !double.TryParse(MaxCalories.Text, out double maxCal) || minCal < 0 || maxCal < 0 ||
-                !double.TryParse(MinProteins.Text, out double minProt) || !double.TryParse(MaxProteins.Text, out double maxProt) || minProt < 0 || maxProt < 0 ||
-                !double.TryParse(MinFats.Text, out double minFats) || !double.TryParse(MaxFats.Text, out double maxFats) || minFats < 0 || maxFats < 0 ||
-                !double.TryParse(MinCarbohydrates.Text, out double minCarbs) || !double.TryParse(MaxСarbohydrates.Text, out double maxCarbs) || minCarbs < 0 || maxCarbs < 0)
+            double minCal = double.Parse(MinCalories.Text) * 7;
+            double maxCal = double.Parse(MaxCalories.Text) * 7;
+            double minProt = double.Parse(MinProteins.Text) * 7;
+            double maxProt = double.Parse(MaxProteins.Text) * 7;
+            double minFats = double.Parse(MinFats.Text) * 7;
+            double maxFats = double.Parse(MaxFats.Text) * 7;
+            double minCarbs = double.Parse(MinCarbohydrates.Text) * 7;
+            double maxCarbs = double.Parse(MaxCarbohydrates.Text) * 7;
+            double maxCost = double.Parse(MaxCost.Text);
+            if (maxCal < minCal || maxProt < minProt || maxFats < minFats || maxCarbs < minCarbs)
             {
-                MessageBox.Show("Невірно задані значення КБЖУ!\n" +
-                    "Введіть числові значення > 0.");
+                MessageBox.Show($"Некоректні межі значень для КБЖВ. Введіть коректні значення!");
                 return new List<Product>();
             }
-            if(!double.TryParse(MaxCost.Text, out double maxCost) || maxCost < 0)
-            {
-                MessageBox.Show("Невірно заданий максимальний бюджет!\n" +
-                    "Введіть числове значення > 0.");
-                return new List<Product>();
-            }
-            if (minCal > maxCal || minProt > maxProt || minFats > maxFats || minCarbs > maxCarbs)
-            {
-                MessageBox.Show("Невірно задані межі КБЖУ!\n" +
-                    "Мінімальна к-сть не може бути більше за максимальну к-сть!");
-                return new List<Product>();
-            }
+
             if (minCal == 0 && minProt == 0 && minFats == 0 && minCarbs == 0 && _selectedProducts.Count == 0)
             {
                 var result = MessageBox.Show(
@@ -131,12 +186,6 @@ namespace Kursach
                 }
             }
 
-            // Переведення всіх обмежень на тиждень
-            minCal *= 7; maxCal *= 7;
-            minProt *= 7; maxProt *= 7;
-            minFats *= 7; maxFats *= 7;
-            minCarbs *= 7; maxCarbs *= 7;
-             
             string productList = "Включає такі продукти:\n";
 
             //обрахунок обов'язкових продуктів
@@ -228,7 +277,7 @@ namespace Kursach
             return finalBasket;  
         }
 
-        private List<Product> SolveWithLinearProgramming(List<Product> products,
+        public  List<Product> SolveWithLinearProgramming(List<Product> products,
             double minCalLeft, double maxCalLeft,
             double minProtLeft, double maxProtLeft,
             double minFatsLeft, double maxFatsLeft,
@@ -312,6 +361,7 @@ namespace Kursach
 
             if (resultStatus == Solver.ResultStatus.OPTIMAL)
             {
+                bool hasAnyProduct = false;
                 foreach (var (product, variable) in variables)
                 {
                     double grams = variable.SolutionValue();
@@ -319,17 +369,37 @@ namespace Kursach
                     {
                         product.SelectedWeight = grams;
                         result.Add(product);
+                        hasAnyProduct = true;
                     }
                 }
-            }
-            else if (resultStatus == Solver.ResultStatus.INFEASIBLE)
-            {
-                MessageBox.Show($"Додаткові продукти не знайдено, занадто вузькі межі КБЖУ");
+                if (!hasAnyProduct)
+                {
+                    MessageBox.Show("Додаткові продукти не знайдено, занадто вузькі межі КБЖУ");
+                }
             }
             return result;
         }
-        private void Result_Click(object sender, RoutedEventArgs e)
+        public void Result_Click(object sender, RoutedEventArgs e)
         {
+            if (!AreAllTextBoxesFilled(this))
+            {
+                MessageBox.Show("Будь ласка, заповніть усі поля!");
+                return;
+            }
+
+            if (myComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Будь ласка, виберіть обмеження по дієті!");
+                myComboBox.BorderBrush = Brushes.Red;
+                myComboBox.BorderThickness = new Thickness(2);
+                return;
+            }
+            else
+            {
+                myComboBox.ClearValue(TextBox.BorderBrushProperty);
+                myComboBox.ClearValue(TextBox.BorderThicknessProperty);
+            }
+
             _selectedProducts.Clear();
 
             foreach (var child in ProductListPanel.Children)
@@ -342,12 +412,9 @@ namespace Kursach
 
                     if (comboBox?.SelectedItem is Product product)
                     {
-                        if (!double.TryParse(minText.Text, out var min) || !double.TryParse(maxText.Text, out var max))
-                        {
-                            MessageBox.Show($"Невірний формат грамів у полі для продукту {product.Name}. Введіть коректні значення!");
-                            return;
-                        }
-                        if (min < 0 || max < 0 || max < min)
+                        double.TryParse(minText.Text, out var min);
+                        double.TryParse(maxText.Text, out var max);
+                        if (max < min)
                         {
                             MessageBox.Show($"Некоректні межі грамів для продукту {product.Name}. Введіть коректні межі!");
                             return;
@@ -363,7 +430,7 @@ namespace Kursach
             }
             GenerateWeeklyBasket();
         }
-        private void InitializeProducts()
+        public void InitializeProducts()
         {
             _products = new List<Product>
             {
@@ -434,10 +501,10 @@ namespace Kursach
                 new Fish { Name = "Креветки", Calories = 83, Proteins = 18, Fats = 0.8, Carbs = 0, Price = 39.9, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\krevetku.png"},
                 new Fish { Name = "Стейки форелі", Calories = 99, Proteins = 19.6, Fats = 2.1, Carbs = 0, Price = 87.9, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\forel.png"},
                 new Fish { Name = "Філе тунця", Calories = 96, Proteins = 22.7, Fats = 0.7, Carbs = 0, Price = 71.9, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tuna.png"},
-                new Drink { Name = "Сік 1л", Calories = 54, Proteins = 1.1, Fats = 0.1, Carbs = 10, Price = 9.4, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\soksandoramultivitamin.jpg"},
-                new Drink { Name = "Солодкі напої 1л", Calories = 42, Proteins = 0, Fats = 0, Carbs = 10.6, Price = 5.4, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\pepsi.webp"},
-                new Drink { Name = "Вода мін. нег. 1л", Calories = 1, Proteins = 0, Fats = 0, Carbs = 0.1, Price = 2.3, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\negaz2.webp"},
-                new Drink { Name = "Вода мін. газ. 1л", Calories = 0.1, Proteins = 0, Fats = 0, Carbs = 0, Price = 2.5, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\gaz.png"},
+                new Drink { Name = "Сік", Calories = 54, Proteins = 1.1, Fats = 0.1, Carbs = 10, Price = 9.4, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\soksandoramultivitamin.jpg"},
+                new Drink { Name = "Солодкі напої", Calories = 42, Proteins = 0, Fats = 0, Carbs = 10.6, Price = 5.4, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\pepsi.webp"},
+                new Drink { Name = "Вода мін. нег.", Calories = 1, Proteins = 0, Fats = 0, Carbs = 0.1, Price = 2.3, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\negaz2.webp"},
+                new Drink { Name = "Вода мін. газ.", Calories = 0.1, Proteins = 0, Fats = 0, Carbs = 0, Price = 2.5, AllowedDiets = new List<DietType> { DietType.Keto, DietType.Vegetarian, DietType.Vegan, DietType.Plant, DietType.Glutenfree, DietType.Interval, DietType.Protein, DietType.Diet, DietType.None }, ImagePath = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\gaz.png"},
             };
         }
         public MainWindow()

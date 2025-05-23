@@ -48,23 +48,23 @@
                 <WrapPanel Orientation="Vertical">
                     <WrapPanel Orientation="Horizontal">
                         <Label Content="Калорій:" FontSize="18" Margin="20,10"/>
-                        <TextBox x:Name="MinCalories" Width="150" Height="25" FontSize="15" Margin="15,10"/>
-                        <TextBox x:Name="MaxCalories" Width="150" Height="25" FontSize="15" Margin="60,10"/>
+                        <TextBox x:Name="MinCalories" Width="150" Height="25" FontSize="15" Margin="15,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <TextBox x:Name="MaxCalories" Width="150" Height="25" FontSize="15" Margin="60,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
                     </WrapPanel>
                     <WrapPanel Orientation="Horizontal">
                         <Label Content="Жирів:" FontSize="18" Margin="20,0"/>
-                        <TextBox x:Name="MinFats" Width="150" Height="25" FontSize="15" Margin="30,5"/>
-                        <TextBox x:Name="MaxFats" Width="150" Height="25" FontSize="15" Margin="45,5"/>
+                        <TextBox x:Name="MinFats" Width="150" Height="25" FontSize="15" Margin="30,5" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <TextBox x:Name="MaxFats" Width="150" Height="25" FontSize="15" Margin="45,5" PreviewTextInput="NumberOnly_PreviewTextInput"/>
                     </WrapPanel>
                     <WrapPanel Orientation="Horizontal">
                         <Label Content="Білків:" FontSize="18" Margin="20,10"/>
-                        <TextBox x:Name="MinProteins" Width="150" Height="25" FontSize="15" Margin="35,10"/>
-                        <TextBox x:Name="MaxProteins" Width="150" Height="25" FontSize="15" Margin="40,10"/>
+                        <TextBox x:Name="MinProteins" Width="150" Height="25" FontSize="15" Margin="35,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <TextBox x:Name="MaxProteins" Width="150" Height="25" FontSize="15" Margin="40,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
                     </WrapPanel>
                     <WrapPanel Orientation="Horizontal">
                         <Label Content="Вуглеводів:" FontSize="18" Margin="20,0,10,0"/>
-                        <TextBox x:Name="MinCarbohydrates" Width="150" Height="25" FontSize="15" Margin="5,0"/>
-                        <TextBox x:Name="MaxСarbohydrates" Width="150" Height="25" FontSize="15" Margin="70,0"/>
+                        <TextBox x:Name="MinCarbohydrates" Width="150" Height="25" FontSize="15" Margin="5,0" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <TextBox x:Name="MaxCarbohydrates" Width="150" Height="25" FontSize="15" Margin="70,0" PreviewTextInput="NumberOnly_PreviewTextInput"/>
                     </WrapPanel>
 
                 </WrapPanel>
@@ -72,7 +72,7 @@
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,5">
                 <Label Content="3. Максимальна ціна кошика (грн):" FontSize="18" VerticalAlignment="Center"/>
-                <TextBox x:Name="MaxCost" Width="100" Height="25" FontSize="15" Margin="10,0"/>
+                <TextBox x:Name="MaxCost" Width="100" Height="25" FontSize="15" Margin="10,0" PreviewTextInput="NumberOnly_PreviewTextInput"/>
             </StackPanel>
 
             <Label Grid.Row="3" Content="4. Бажані продукти та їх кількість на тиждень:" FontSize="18"/>
