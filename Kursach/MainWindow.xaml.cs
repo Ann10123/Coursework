@@ -197,7 +197,7 @@ namespace Kursach
                     selection.MinGramsPerDay >= 0 &&
                     selection.MaxGramsPerDay >= selection.MinGramsPerDay)
                 {
-                    // Залишки КБЖУ
+                    // Залишки КБЖВ
                     double calLeft = maxCal - totalCalories;
                     double protLeft = maxProt - totalProteins;
                     double fatsLeft = maxFats - totalFats;
@@ -276,7 +276,38 @@ namespace Kursach
             MessageBox.Show(productList, "🛍️ Сформований кошик:");
             return finalBasket;  
         }
+        public void AddMinConstraint(Solver solver, Dictionary<Product, Variable> variables, Func<Product, double> selector, double min)
+        {
+            if (min < 0) return;
 
+            LinearExpr expr = null;
+            foreach (var kvp in variables)
+            {
+                var term = kvp.Value * selector(kvp.Key) / 100.0;
+                expr = expr == null ? term : expr + term;
+            }
+
+            if (expr != null)
+            {
+                solver.Add(expr >= min);
+            }
+        }
+        public void AddMaxConstraint(Solver solver, Dictionary<Product, Variable> variables, Func<Product, double> selector, double max)
+        {
+            if (max <= 0) return;
+
+            LinearExpr expr = null;
+            foreach (var kvp in variables)
+            {
+                var term = kvp.Value * selector(kvp.Key) / 100.0;
+                expr = expr == null ? term : expr + term;
+            }
+
+            if (expr != null)
+            {
+                solver.Add(expr <= max);
+            }
+        }
         public  List<Product> SolveWithLinearProgramming(List<Product> products,
             double minCalLeft, double maxCalLeft,
             double minProtLeft, double maxProtLeft,
@@ -299,56 +330,24 @@ namespace Kursach
                 var variable = solver.MakeNumVar(0.0, double.PositiveInfinity, product.Name);
                 variables[product] = variable;
             }
-            //обмеження по мінімуму
-            void AddMinConstraint(Func<Product, double> selector, double min)
-            {
-                if (min < 0) return;
-                LinearExpr expr = null;
-                foreach (var kvp in variables)
-                {
-                    var term = kvp.Value * selector(kvp.Key) / 100.0;
-                    expr = expr == null ? term : expr + term;
-                }
-
-                if (expr != null)
-                {
-                    solver.Add(expr >= min);
-                }
-            }
-            //обмеження по максимуму
-            void AddMaxConstraint(Func<Product, double> selector, double max)
-            {
-                if (max <= 0) return;
-
-                LinearExpr expr = null;
-                foreach (var kvp in variables)
-                {
-                    var term = kvp.Value * selector(kvp.Key) / 100.0;
-                    expr = expr == null ? term : expr + term;
-                }
-
-                if (expr != null)
-                {
-                    solver.Add(expr <= max);
-                }
-            }
 
             // Всі обмеження
-            AddMinConstraint(p => p.Calories, minCalLeft);
-            AddMaxConstraint(p => p.Calories, maxCalLeft);
+            AddMinConstraint(solver, variables, p => p.Calories, minCalLeft);
+            AddMaxConstraint(solver, variables, p => p.Calories, maxCalLeft);
 
-            AddMinConstraint(p => p.Proteins, minProtLeft);
-            AddMaxConstraint(p => p.Proteins, maxProtLeft);
+            AddMinConstraint(solver, variables, p => p.Proteins, minProtLeft);
+            AddMaxConstraint(solver, variables, p => p.Proteins, maxProtLeft);
 
-            AddMinConstraint(p => p.Fats, minFatsLeft);
-            AddMaxConstraint(p => p.Fats, maxFatsLeft);
+            AddMinConstraint(solver, variables, p => p.Fats, minFatsLeft);
+            AddMaxConstraint(solver, variables, p => p.Fats, maxFatsLeft);
 
-            AddMinConstraint(p => p.Carbs, minCarbsLeft);
-            AddMaxConstraint(p => p.Carbs, maxCarbsLeft);
+            AddMinConstraint(solver, variables, p => p.Carbs, minCarbsLeft);
+            AddMaxConstraint(solver, variables, p => p.Carbs, maxCarbsLeft);
 
-            AddMaxConstraint(p => p.Price, maxCostLeft);
+            AddMaxConstraint(solver, variables, p => p.Price, maxCostLeft);
 
             // Мінімізація вартості
+
             Objective objective = solver.Objective();
             foreach (var (product, variable) in variables)
             {
