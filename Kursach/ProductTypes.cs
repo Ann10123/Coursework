@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Kursach
 {
-    public class Vegetable : Product { public override string Category => "Овочі"; }
-    public class Fruit : Product { public override string Category => "Фрукти"; }
+    public class Vegetables : Product { public override string Category => "Овочі"; }
+    public class Fruits : Product { public override string Category => "Фрукти"; }
     public class Сereals : Product { public override string Category => "Крупи"; }
     public class Seed : Product { public override string Category => "Насіння"; }
     public class Nuts : Product { public override string Category => "Горіхи"; }

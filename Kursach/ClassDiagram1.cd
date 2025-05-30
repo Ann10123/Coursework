@@ -3,7 +3,7 @@
   <Class Name="Kursach.Product">
     <Position X="2" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAQAAAAEAAAAAAJwCAAAAgBAAAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAQAAAAEAAAAAAJwCAAAAABAAAAAAAAAACAA=</HashCode>
       <FileName>Product.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -14,96 +14,96 @@
       <FileName>ProductSelection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Vegetable">
+  <Class Name="Kursach.Vegetables">
     <Position X="4.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Fruit">
+  <Class Name="Kursach.Fruits">
     <Position X="10.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kursach.Сereals">
     <Position X="5.25" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kursach.Seed">
     <Position X="11.25" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kursach.Nuts">
     <Position X="6.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kursach.Sweets">
     <Position X="12.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kursach.Milk">
     <Position X="7.25" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kursach.Bread">
     <Position X="13.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kursach.Meat">
     <Position X="8.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kursach.Fish">
     <Position X="14.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kursach.Drink">
     <Position X="9.25" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="Kursach.MainWindow">
+    <Position X="15.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAADAAAQABAAQAAAMARAAAAEAAAgAAAAYgAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Kursach.SimpleDietFilter">
     <Position X="7" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>SimpleDietFilter.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Kursach.MainWindow">
-    <Position X="15.75" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAADAAAQABAAQAAAMARAAAAEAAAAAAAAYgQAAAAAAA=</HashCode>
-      <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

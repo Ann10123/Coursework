@@ -9,6 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="Google.OrTools" Version="9.12.4544" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>
