@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Kursach
 {
-    public class Vegetable : Product { public override string GetCategory() => "Овочі"; }
-    public class Fruit : Product { public override string GetCategory() => "Фрукти"; }
-    public class Сereals : Product { public override string GetCategory() => "Крупи"; }
-    public class Seed : Product { public override string GetCategory() => "Насіння"; }
-    public class Nuts : Product { public override string GetCategory() => "Горіхи"; }
-    public class Sweets : Product { public override string GetCategory() => "Солодощі"; }
-    public class Milk : Product { public override string GetCategory() => "Молоко"; }
-    public class Bread : Product { public override string GetCategory() => "Хліб"; }
-    public class Meat : Product { public override string GetCategory() => "М'ясо"; }
-    public class Fish : Product { public override string GetCategory() => "Риба"; }
-    public class Drink : Product { public override string GetCategory() => "Напої"; }
+    public class Vegetable : Product { public override string Category => "Овочі"; }
+    public class Fruit : Product { public override string Category => "Фрукти"; }
+    public class Сereals : Product { public override string Category => "Крупи"; }
+    public class Seed : Product { public override string Category => "Насіння"; }
+    public class Nuts : Product { public override string Category => "Горіхи"; }
+    public class Sweets : Product { public override string Category => "Солодощі"; }
+    public class Milk : Product { public override string Category => "Молоко"; }
+    public class Bread : Product { public override string Category => "Хліб"; }
+    public class Meat : Product { public override string Category => "М'ясо"; }
+    public class Fish : Product { public override string Category => "Риба"; }
+    public class Drink : Product { public override string Category => "Напої"; }
 }
 

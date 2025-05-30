@@ -16,7 +16,7 @@ namespace Kursach
         public double Price { get; set; }
         public string ImagePath { get; set; }
         public List<DietType> AllowedDiets { get; set; } = new List<DietType> { DietType.None };
-        public abstract string GetCategory();
+        public abstract string Category { get; }
         public double SelectedWeight { get; set; }
     }
 }

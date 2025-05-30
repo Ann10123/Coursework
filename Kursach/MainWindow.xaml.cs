@@ -2,11 +2,13 @@ using Google.OrTools.LinearSolver;
 using Kursach;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -81,6 +83,10 @@ namespace Kursach
         public void AddProductBox_Click(object sender, RoutedEventArgs e)
         {
             var row = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
+
+            var collectionView = new ListCollectionView(_products);
+            collectionView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
+
             var comboBox = new ComboBox
             {
                 Width = 260,
@@ -88,30 +94,45 @@ namespace Kursach
                 Margin = new Thickness(0, 0, 0, 0),
                 Background = Brushes.White,
                 Foreground = Brushes.Black,
-                ItemsSource = _products,
-                SelectedIndex = -1,
+                ItemsSource = collectionView,
                 ItemTemplate = FindResource("ProductTemplate") as DataTemplate
             };
+
+            // Додаємо стиль заголовків груп
+            var borderFactory = new FrameworkElementFactory(typeof(Border));
+            borderFactory.SetValue(Border.BorderBrushProperty, Brushes.Black); // колір контуру
+            borderFactory.SetValue(Border.BorderThicknessProperty, new Thickness(1));
+            var headerFactory = new FrameworkElementFactory(typeof(TextBlock));
+            headerFactory.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);
+            headerFactory.SetValue(TextBlock.ForegroundProperty, Brushes.Black);
+            headerFactory.SetValue(TextBlock.PaddingProperty, new Thickness(5));
+            headerFactory.SetBinding(TextBlock.TextProperty, new Binding("Name"));
+            headerFactory.SetValue(TextBlock.FontSizeProperty, 20.0);
+
+            borderFactory.AppendChild(headerFactory);
+
+            var groupStyle = new GroupStyle
+            {
+                HeaderTemplate = new DataTemplate
+                {
+                    VisualTree = borderFactory
+                }
+            };
+
+            comboBox.GroupStyle.Add(groupStyle);
             var minText = new TextBox
             {
-                Width = 100,
-                Height = 25,
-                Margin = new Thickness(40, 0, 0, 0),
+                Width = 100, Height = 25, Margin = new Thickness(40, 0, 0, 0),
             };
             minText.PreviewTextInput += NumberOnly_PreviewTextInput;
             var maxText = new TextBox
             {
-                Width = 100,
-                Height = 25,
-                Margin = new Thickness(90, 0, 0, 0),
+                Width = 100, Height = 25, Margin = new Thickness(90, 0, 0, 0),
             };
             maxText.PreviewTextInput += NumberOnly_PreviewTextInput;
             var deleteButton = new Button
             {
-                Content = "❌",
-                Width = 25,
-                Height = 25,
-                Margin = new Thickness(50, 0, 0, 0)
+                Content = "❌", Width = 25, Height = 25, Margin = new Thickness(50, 0, 0, 0)
             };
             deleteButton.Click += (s, ev) => ProductListPanel.Children.Remove(row);
 
@@ -211,6 +232,16 @@ namespace Kursach
 
                     // Вибрати максимально можливу вагу, що не перевищує max і не менше min
                     double selectedGrams = Math.Min(Math.Min(maxByCal, maxByProt), Math.Min(maxByFats, maxByCarbs));
+                    if (selectedGrams < selection.MinGramsPerDay)
+                    {
+                        MessageBox.Show(
+                            $"Продукт {product.Name} не може бути доданий, оскільки його мінімальна кількість перевищує встановлені обмеження.",
+                            "Перевищення обмежень",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        continue;
+                    }
                     selectedGrams = Math.Clamp(selectedGrams, selection.MinGramsPerDay, selection.MaxGramsPerDay);
 
                     double multiplier = selectedGrams / 100.0;
@@ -225,7 +256,6 @@ namespace Kursach
                     finalBasket.Add(product);
                 }
             }
-
             // Обчислення залишків для LP
             double minCalLeft = Math.Max(0, minCal - totalCalories);
             double maxCalLeft = Math.Max(0, maxCal - totalCalories);
@@ -245,14 +275,8 @@ namespace Kursach
                 .Where(p => _dietFilter.IsAllowed(p, _selectedDietType) && !_selectedProducts.Any(sel => sel.Product == p))
                 .ToList();
 
-            var lpProducts = SolveWithLinearProgramming(
-                optionalProducts,
-                minCalLeft, maxCalLeft,
-                minProtLeft, maxProtLeft,
-                minFatsLeft, maxFatsLeft,
-                minCarbsLeft, maxCarbsLeft,
-                maxCostLeft
-            );
+            var lpProducts = SolveWithLinearProgramming(optionalProducts, minCalLeft, maxCalLeft, minProtLeft, 
+                maxProtLeft, minFatsLeft, maxFatsLeft, minCarbsLeft, maxCarbsLeft, maxCostLeft);
 
             foreach (var product in lpProducts)
             {
@@ -294,7 +318,7 @@ namespace Kursach
         }
         public void AddMaxConstraint(Solver solver, Dictionary<Product, Variable> variables, Func<Product, double> selector, double max)
         {
-            if (max <= 0) return;
+            if (max < 0) return;
 
             LinearExpr expr = null;
             foreach (var kvp in variables)
@@ -347,7 +371,6 @@ namespace Kursach
             AddMaxConstraint(solver, variables, p => p.Price, maxCostLeft);
 
             // Мінімізація вартості
-
             Objective objective = solver.Objective();
             foreach (var (product, variable) in variables)
             {
@@ -360,7 +383,6 @@ namespace Kursach
 
             if (resultStatus == Solver.ResultStatus.OPTIMAL)
             {
-                bool hasAnyProduct = false;
                 foreach (var (product, variable) in variables)
                 {
                     double grams = variable.SolutionValue();
@@ -368,13 +390,12 @@ namespace Kursach
                     {
                         product.SelectedWeight = grams;
                         result.Add(product);
-                        hasAnyProduct = true;
                     }
                 }
-                if (!hasAnyProduct)
-                {
-                    MessageBox.Show("Додаткові продукти не знайдено, занадто вузькі межі КБЖУ");
-                }
+            }
+            else
+            {
+                MessageBox.Show($"Додаткових продуктів не знайдено! Задля іншого результату збільшіть межі значень.");
             }
             return result;
         }
@@ -425,6 +446,7 @@ namespace Kursach
                             MaxGramsPerDay = max
                         });
                     }
+                    
                 }
             }
             GenerateWeeklyBasket();
