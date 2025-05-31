@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Kursach.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Продуктовий кошик 🛍️" Height="700" Width="730">
+        Title="Продуктовий кошик 🛍️" Height="700" Width="750" Background="#d0f7fc">
 
     <Window.Resources>
         <DataTemplate x:Key="ProductTemplate">
@@ -25,8 +25,8 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Label Content="1. Вид дієти:" FontSize="18" VerticalAlignment="Center"/>
-                <ComboBox x:Name="myComboBox" Width="150" Height="25" Margin="10,0,0,0" SelectionChanged="MyComboBox_SelectionChanged">
+                <Label Content="1. Вид дієти:" FontSize="18" FontStyle="Italic" VerticalAlignment="Center"/>
+                <ComboBox x:Name="myComboBox" Width="150" Height="25" Margin="10,0,0,0" BorderThickness="2" BorderBrush = "Gray" FontStyle="Italic" SelectionChanged="MyComboBox_SelectionChanged">
                     <ComboBoxItem Content="без обмежень"/>
                     <ComboBoxItem Content="кетодієта"/>
                     <ComboBoxItem Content="вегетеріанська"/>
@@ -40,55 +40,55 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="0,0,0,10">
-                <Label Content="2. Вкажіть необхідне КБЖВ на день:" FontSize="18"/>
+                <Label Content="2. Вкажіть необхідне КБЖВ на день:" FontSize="18" FontStyle="Italic"/>
                 <WrapPanel >
-                    <Label Content="Мінімальна к-сть:" FontSize="18" Margin="140,10,0,0"/>
-                    <Label Content="Максимальна к-сть:" FontSize="18" Margin="70,10,0,0"/>
+                    <Label Content="Мінімальна к-сть:" FontSize="18" FontStyle="Italic" Margin="130,10,0,0"/>
+                    <Label Content="Максимальна к-сть:" FontSize="18" FontStyle="Italic" Margin="65,10,0,0"/>
                 </WrapPanel>
                 <WrapPanel Orientation="Vertical">
                     <WrapPanel Orientation="Horizontal">
-                        <Label Content="Калорій:" FontSize="18" Margin="20,10"/>
-                        <TextBox x:Name="MinCalories" Width="150" Height="25" FontSize="15" Margin="15,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
-                        <TextBox x:Name="MaxCalories" Width="150" Height="25" FontSize="15" Margin="60,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <Label Content="Калорій:" FontSize="18" FontStyle="Italic" Margin="20,10"/>
+                        <TextBox x:Name="MinCalories" Width="150" Height="25" FontSize="15" BorderThickness="2" FontStyle="Italic" BorderBrush = "Gray" Margin="15,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <TextBox x:Name="MaxCalories" Width="150" Height="25" FontSize="15" BorderThickness="2" FontStyle="Italic" BorderBrush = "Gray" Margin="60,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
                     </WrapPanel>
                     <WrapPanel Orientation="Horizontal">
-                        <Label Content="Жирів:" FontSize="18" Margin="20,0"/>
-                        <TextBox x:Name="MinFats" Width="150" Height="25" FontSize="15" Margin="30,5" PreviewTextInput="NumberOnly_PreviewTextInput"/>
-                        <TextBox x:Name="MaxFats" Width="150" Height="25" FontSize="15" Margin="45,5" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <Label Content="Білків" FontSize="18" FontStyle="Italic" Margin="20,0"/>
+                        <TextBox x:Name="MinProteins" Width="150" Height="25" FontSize="15" BorderThickness="2" FontStyle="Italic" BorderBrush = "Gray" Margin="37,5" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <TextBox x:Name="MaxProteins" Width="150" Height="25" FontSize="15" BorderThickness="2" FontStyle="Italic" BorderBrush = "Gray" Margin="38,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
                     </WrapPanel>
                     <WrapPanel Orientation="Horizontal">
-                        <Label Content="Білків:" FontSize="18" Margin="20,10"/>
-                        <TextBox x:Name="MinProteins" Width="150" Height="25" FontSize="15" Margin="35,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
-                        <TextBox x:Name="MaxProteins" Width="150" Height="25" FontSize="15" Margin="40,10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <Label Content="Жирів:" FontSize="18" FontStyle="Italic" Margin="20,10"/>
+                        <TextBox x:Name="MinFats" Width="150" Height="25" FontSize="15" BorderThickness="2" FontStyle="Italic" BorderBrush = "Gray" Margin="33,5" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <TextBox x:Name="MaxFats" Width="150" Height="25" FontSize="15" BorderThickness="2" FontStyle="Italic" BorderBrush = "Gray" Margin="42,5" PreviewTextInput="NumberOnly_PreviewTextInput"/>
                     </WrapPanel>
                     <WrapPanel Orientation="Horizontal">
-                        <Label Content="Вуглеводів:" FontSize="18" Margin="20,0,10,0"/>
-                        <TextBox x:Name="MinCarbohydrates" Width="150" Height="25" FontSize="15" Margin="5,0" PreviewTextInput="NumberOnly_PreviewTextInput"/>
-                        <TextBox x:Name="MaxCarbohydrates" Width="150" Height="25" FontSize="15" Margin="70,0" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <Label Content="Вуглеводів:" FontSize="18" FontStyle="Italic" Margin="20,0,10,0"/>
+                        <TextBox x:Name="MinCarbohydrates" Width="150" Height="25" FontSize="15" BorderThickness="2" BorderBrush = "Gray" FontStyle="Italic" Margin="5,0" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                        <TextBox x:Name="MaxCarbohydrates" Width="150" Height="25" FontSize="15" BorderThickness="2" BorderBrush = "Gray" FontStyle="Italic" Margin="70,0" PreviewTextInput="NumberOnly_PreviewTextInput"/>
                     </WrapPanel>
 
                 </WrapPanel>
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,5">
-                <Label Content="3. Максимальна ціна кошика (грн):" FontSize="18" VerticalAlignment="Center"/>
-                <TextBox x:Name="MaxCost" Width="100" Height="25" FontSize="15" Margin="10,0" PreviewTextInput="NumberOnly_PreviewTextInput"/>
+                <Label Content="3. Максимальна ціна кошика (грн):" FontSize="18" FontStyle="Italic" VerticalAlignment="Center"/>
+                <TextBox x:Name="MaxCost" Width="100" Height="25" FontSize="15" BorderThickness="2" BorderBrush = "Gray" FontStyle="Italic" Margin="10,0" PreviewTextInput="NumberOnly_PreviewTextInput"/>
             </StackPanel>
 
-            <Label Grid.Row="3" Content="4. Бажані продукти та їх кількість на тиждень:" FontSize="18"/>
+            <Label Grid.Row="3" Content="4. Бажані продукти та їх кількість на тиждень:" FontSize="18" FontStyle="Italic"/>
 
             <StackPanel Grid.Row="4" x:Name="ProductListPanel">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Продукт:" FontSize="18" Margin="20,0,20,0"/>
-                    <Label Content="Мін. к-сть (грам):" FontSize="18" Margin="150,0,30,0"/>
-                    <Label Content="Макс. к-сть (грам):" FontSize="18"/>
+                    <Label Content="Продукт:" FontSize="18" FontStyle="Italic" Margin="20,0,20,0"/>
+                    <Label Content="Мін. к-сть (гр/шт):" FontSize="18" FontStyle="Italic" Margin="165,0,20,0"/>
+                    <Label Content="Макс. к-сть (гр/шт):" FontSize="18" FontStyle="Italic"/>
                 </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Row="5" Orientation="Vertical">
-                <Button x:Name="AddProductButton" Content="Додати" Click="AddProductBox_Click" Width="120" Height="30" FontSize="15" Background="White" Margin="25,10,0,10" HorizontalAlignment="Left" />
+                <Button x:Name="AddProductButton" Content="Додати" BorderThickness="2" Click="AddProductBox_Click" Width="120" Height="30" FontSize="15" FontStyle="Italic" Background="White" Margin="25,10,0,10" HorizontalAlignment="Left" />
 
-                <Button x:Name="ResultButton" Content="Скласти кошик" Width="150" Height="35" FontSize="15" Background="White" Click="Result_Click"/>
+                <Button x:Name="ResultButton" Content="Скласти кошик" BorderThickness="2" Width="150" Height="35" FontSize="15" FontStyle="Italic" Background="White" Click="Result_Click"/>
             </StackPanel>
 
         </Grid>

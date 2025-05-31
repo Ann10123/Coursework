@@ -3,7 +3,7 @@
   <Class Name="Kursach.Product">
     <Position X="2" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAQAAAAEAAAAAAJwCAAAAABAAAAAAAAAACAA=</HashCode>
+      <HashCode>IAAAAAAAAQAAAAEAIAAAAJwCAAAAABAAEAAAAAAACAA=</HashCode>
       <FileName>Product.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -94,13 +94,13 @@
   <Class Name="Kursach.MainWindow">
     <Position X="15.75" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAADAAAQABAAQAAAMARAAAAEAAAgAAAAYgAAAAAAAA=</HashCode>
+      <HashCode>AAACDAAAQABAAQAAAMARAAAAEAAAAAAAAYgAAAAAAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Kursach.SimpleDietFilter">
-    <Position X="7" Y="7" Width="1.5" />
+    <Position X="6.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>SimpleDietFilter.cs</FileName>
@@ -119,6 +119,13 @@
     <TypeIdentifier>
       <HashCode>AAAQAAABAAAAAAAAAIAAgAAAAAAAAIAAAAgAACEAAgA=</HashCode>
       <FileName>DietType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Kursach.UnitProduct">
+    <Position X="8.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>UnitProduct.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

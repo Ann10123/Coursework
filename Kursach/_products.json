@@ -7,8 +7,9 @@
     "Fats": 0.1,
     "Carbs": 19.7,
     "Price": 2.9,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\potato.webp"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\potato.webp",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -18,8 +19,9 @@
     "Fats": 0.3,
     "Carbs": 12.5,
     "Price": 7.9,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kapusta.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kapusta.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -29,8 +31,9 @@
     "Fats": 0.4,
     "Carbs": 5,
     "Price": 40,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\broccoli.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\broccoli.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -40,8 +43,10 @@
     "Fats": 0,
     "Carbs": 2.6,
     "Price": 73,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\spinach.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\spinach.jpg",
+    "Unit": "Grams"
+
   },
   {
     "Category": "Vegetables",
@@ -51,8 +56,9 @@
     "Fats": 0,
     "Carbs": 2.2,
     "Price": 39.7,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\salat.webp"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\salat.webp",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -62,8 +68,9 @@
     "Fats": 0.7,
     "Carbs": 2.1,
     "Price": 78.7,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\rukola.png"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\rukola.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -73,8 +80,9 @@
     "Fats": 0,
     "Carbs": 3.1,
     "Price": 9.9,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\cucumber.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\cucumber.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -84,8 +92,9 @@
     "Fats": 0,
     "Carbs": 4.1,
     "Price": 12.9,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\pomidor.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\pomidor.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -95,8 +104,9 @@
     "Fats": 0.1,
     "Carbs": 6.3,
     "Price": 3.5,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\carrot.webp"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\carrot.webp",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -106,8 +116,9 @@
     "Fats": 0.1,
     "Carbs": 3.1,
     "Price": 71.6,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\sparzha.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\sparzha.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -117,8 +128,9 @@
     "Fats": 0.9,
     "Carbs": 1.4,
     "Price": 13.5,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\mushrooms.webp"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\mushrooms.webp",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -128,8 +140,9 @@
     "Fats": 0.3,
     "Carbs": 5.7,
     "Price": 10.9,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\zucchini.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\zucchini.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Vegetables",
@@ -139,8 +152,9 @@
     "Fats": 1.2,
     "Carbs": 18.2,
     "Price": 9.9,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kukurudza.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kukurudza.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Fruits",
@@ -150,8 +164,9 @@
     "Fats": 23.5,
     "Carbs": 6.7,
     "Price": 16,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\avokado.jpg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\avokado.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Fruits",
@@ -161,8 +176,9 @@
     "Fats": 0,
     "Carbs": 22.4,
     "Price": 7.7,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\banana.jpg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\banana.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Fruits",
@@ -172,8 +188,9 @@
     "Fats": 0,
     "Carbs": 11.3,
     "Price": 5.4,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\apple.jpg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\apple.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Fruits",
@@ -183,8 +200,9 @@
     "Fats": 0.3,
     "Carbs": 7.7,
     "Price": 19.9,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\strawberry.jpg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\strawberry.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Fruits",
@@ -194,8 +212,9 @@
     "Fats": 0,
     "Carbs": 8.4,
     "Price": 7.2,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\orange.jpeg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\orange.jpeg",
+    "Unit": "Grams"
   },
   {
     "Category": "Fruits",
@@ -205,8 +224,9 @@
     "Fats": 0,
     "Carbs": 7.3,
     "Price": 11.5,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\grapefruit.jpg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\grapefruit.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Fruits",
@@ -216,8 +236,9 @@
     "Fats": 0,
     "Carbs": 3.6,
     "Price": 9.9,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\lemon.jpeg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\lemon.jpeg",
+    "Unit": "Grams"
   },
   {
     "Category": "Cereals",
@@ -227,8 +248,9 @@
     "Fats": 6.1,
     "Carbs": 64.1,
     "Price": 38.8,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\quinoa.jpg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\quinoa.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Cereals",
@@ -238,8 +260,9 @@
     "Fats": 0.6,
     "Carbs": 71.3,
     "Price": 5.5,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\rice.jpeg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\rice.jpeg",
+    "Unit": "Grams"
   },
   {
     "Category": "Cereals",
@@ -249,8 +272,9 @@
     "Fats": 3.4,
     "Carbs": 72.5,
     "Price": 4.6,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\krupa-grechnevaya.jpg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\krupa-grechnevaya.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Cereals",
@@ -260,8 +284,9 @@
     "Fats": 7,
     "Carbs": 65.9,
     "Price": 6.8,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None"],
-    "ImagePath":  "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\ovsyanka-plyushchena.jpg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\ovsyanka-plyushchena.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Cereals",
@@ -271,8 +296,9 @@
     "Fats": 1.3,
     "Carbs": 75.9,
     "Price": 7.1,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None"],
-    "ImagePath":  "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\bulgur.png"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\bulgur.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Cereals",
@@ -282,8 +308,9 @@
     "Fats": 1.7,
     "Carbs": 54.5,
     "Price": 15,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kvasolya.jpeg"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kvasolya.jpeg",
+    "Unit": "Grams"
   },
   {
     "Category": "Cereals",
@@ -293,8 +320,9 @@
     "Fats": 1.1,
     "Carbs": 53.7,
     "Price": 14,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\sochevitsya-chervona.png"
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\sochevitsya-chervona.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Seed",
@@ -304,8 +332,9 @@
     "Fats": 32,
     "Carbs": 10.1,
     "Price": 46.8,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\chia.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\chia.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Seed",
@@ -315,8 +344,9 @@
     "Fats": 42,
     "Carbs": 29,
     "Price": 11.6,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\linen.webp"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\linen.webp",
+    "Unit": "Grams"
   },
   {
     "Category": "Nuts",
@@ -326,8 +356,9 @@
     "Fats": 57.7,
     "Carbs": 13.6,
     "Price": 92.6,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\mindal.jpeg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\mindal.jpeg",
+    "Unit": "Grams"
   },
   {
     "Category": "Nuts",
@@ -337,8 +368,9 @@
     "Fats": 45.2,
     "Carbs": 9.8,
     "Price": 28.8,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\araxis.jpeg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\araxis.jpeg",
+    "Unit": "Grams"
   },
   {
     "Category": "Nuts",
@@ -348,8 +380,9 @@
     "Fats": 66.9,
     "Carbs": 9.9,
     "Price": 81.3,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\unnamed.jpg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\unnamed.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Nuts",
@@ -359,8 +392,9 @@
     "Fats": 54.3,
     "Carbs": 13.3,
     "Price": 109.3,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kesyu.jpeg"
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kesyu.jpeg",
+    "Unit": "Grams"
   },
   {
     "Category": "Sweets",
@@ -370,118 +404,118 @@
     "Fats": 50.2,
     "Carbs": 10.8,
     "Price": 34.8,
-    "AllowedDiets": ["None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\arahisova-pasta.jpg"
+    "AllowedDiets": [ "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\arahisova-pasta.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Sweets",
-    "Name": "Шоколад молочний",
-    "Calories": 552,
-    "Proteins": 6.7,
-    "Fats": 35.6,
-    "Carbs": 52.4,
-    "Price": 95,
-    "AllowedDiets": ["None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\milk_chokolate.jpeg"
-  },
-  {
-    "Category": "Sweets",
-    "Name": "Шоколад чорний",
-    "Calories": 546,
-    "Proteins": 5.2,
-    "Fats": 35.6,
-    "Carbs": 52.4,
-    "Price": 95,
-    "AllowedDiets": ["None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\dark_chokolate.jpg"
+    "Name": "Шоколад, 1шт.",
+    "Calories": 532,
+    "Proteins": 6.2,
+    "Fats": 33.4,
+    "Carbs": 52.7,
+    "Price": 70,
+    "AllowedDiets": [ "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\milk_chokolate.jpeg",
+    "Unit": "Pieces"
+
   },
   {
     "Category": "Milk",
-    "Name": "Безлактозне молоко 1.5%",
-    "Calories": 44,
-    "Proteins": 3.1,
-    "Fats": 1.5,
-    "Carbs": 4.6,
-    "Price": 8.5,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\milk3.jpeg"
+    "Name": "Безлактозне молоко, 1л.",
+    "Calories": 540,
+    "Proteins": 30,
+    "Fats": 25,
+    "Carbs": 48,
+    "Price": 120,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath":"C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\milk3.jpeg",
+    "Unit": "Pieces"
   },
   {
     "Category": "Milk",
-    "Name": "Молоко 3.2%",
-    "Calories": 58,
-    "Proteins": 2.8,
-    "Fats": 3.2,
-    "Carbs": 4.7,
-    "Price": 6.4,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\milk.webp"
+    "Name": "Молоко 3.2%, 1л.",
+    "Calories": 600,
+    "Proteins": 30,
+    "Fats": 32,
+    "Carbs": 47,
+    "Price": 60,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\milk.webp",
+    "Unit": "Pieces"
   },
   {
     "Category": "Milk",
-    "Name": "Безлактозний кефір 2.5%",
-    "Calories": 51,
+    "Name": "Безлактозний кефір, 1л.",
+    "Calories": 480,
+    "Proteins": 27,
+    "Fats": 18,
+    "Carbs": 26,
+    "Price": 81,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kefir.png",
+    "Unit": "Pieces"
+  },
+  {
+    "Category": "Milk",
+    "Name": "Сметана 15%, 300гр",
+    "Calories": 520,
+    "Proteins": 8.4,
+    "Fats": 60,
+    "Carbs": 9,
+    "Price": 54,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\sourcream.webp",
+    "Unit": "Pieces"
+  },
+  {
+    "Category": "Milk",
+    "Name": "Грецький йогурт, 300гр",
+    "Calories": 204,
+    "Proteins": 15,
+    "Fats": 9,
+    "Carbs": 15.6,
+    "Price": 44,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\yogurt.webp",
+    "Unit": "Pieces"
+  },
+  {
+    "Category": "Milk",
+    "Name": "Питний йогурт, 300гр.",
+    "Calories": 258,
+    "Proteins": 7.8,
+    "Fats": 6.6,
+    "Carbs": 13.4,
+    "Price": 36,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\yogurtp.jpg",
+    "Unit": "Pieces"
+  },
+  {
+    "Category": "Milk",
+    "Name": "Мигдальне молоко, 1л.",
+    "Calories": 230,
+    "Proteins": 1.5,
+    "Fats": 0.3,
+    "Carbs": 7.8,
+    "Price": 164,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\almond_milk.jpg",
+    "Unit": "Pieces"
+  },
+  {
+    "Category": "Milk",
+    "Name": "Вівсяне молоко, 1л.",
+    "Calories": 530,
     "Proteins": 3,
-    "Fats": 2.5,
-    "Carbs": 4,
-    "Price": 8.1,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\kefir.png"
-  },
-  {
-    "Category": "Milk",
-    "Name": "Сметана 15%",
-    "Calories": 163,
-    "Proteins": 3.5,
-    "Fats": 15,
-    "Carbs": 3.4,
-    "Price": 16,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\sourcream.webp"
-  },
-  {
-    "Category": "Milk",
-    "Name": "Грецький йогурт 2.5%",
-    "Calories": 69,
-    "Proteins": 5,
-    "Fats": 2.5,
-    "Carbs": 6.5,
-    "Price": 16.4,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\yogurt.webp"
-  },
-  {
-    "Category": "Milk",
-    "Name": "Питний йогурт",
-    "Calories": 71,
-    "Proteins": 2.8,
-    "Fats": 1.5,
-    "Carbs": 11.5,
-    "Price": 12.6,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\yogurtp.jpg"
-  },
-  {
-    "Category": "Milk",
-    "Name": "Мигдальне молоко",
-    "Calories": 24,
-    "Proteins": 0.5,
-    "Fats": 1.2,
-    "Carbs": 2.6,
-    "Price": 16.9,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\almond_milk.jpg"
-  },
-  {
-    "Category": "Milk",
-    "Name": "Вівсяне молоко",
-    "Calories": 44,
-    "Proteins": 0.3,
-    "Fats": 1.5,
-    "Carbs": 6.8,
-    "Price": 14.9,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\moloko-vivsyane.webp"
+    "Fats": 7.5,
+    "Carbs": 65,
+    "Price": 160,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\moloko-vivsyane.webp",
+    "Unit": "Pieces"
   },
   {
     "Category": "Milk",
@@ -491,19 +525,21 @@
     "Fats": 0.6,
     "Carbs": 1.8,
     "Price": 26.8,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tvorog-kislomolochnyj.jpg"
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tvorog-kislomolochnyj.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Milk",
-    "Name": "Яйця",
-    "Calories": 83,
-    "Proteins": 6.8,
-    "Fats": 6,
-    "Carbs": 0.5,
-    "Price": 14.6,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\eggs.jpg"
+    "Name": "Яйця, 1шт.",
+    "Calories": 77,
+    "Proteins": 6.2,
+    "Fats": 5.6,
+    "Carbs": 0.3,
+    "Price": 6.5,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\eggs.jpg",
+    "Unit": "Pieces"
   },
   {
     "Category": "Milk",
@@ -513,8 +549,9 @@
     "Fats": 34.2,
     "Carbs": 4.1,
     "Price": 36,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\philadelfia.webp"
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\philadelfia.webp",
+    "Unit": "Grams"
   },
   {
     "Category": "Milk",
@@ -524,8 +561,9 @@
     "Fats": 24,
     "Carbs": 2.9,
     "Price": 44.6,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\feta.jpg"
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\feta.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Milk",
@@ -535,41 +573,45 @@
     "Fats": 26,
     "Carbs": 1.4,
     "Price": 52.9,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\gauda.jpg"
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\gauda.jpg",
+    "Unit": "Grams"
   },
   {
     "Category": "Milk",
-    "Name": "Вершкове масло 73%",
-    "Calories": 665,
-    "Proteins": 0.8,
-    "Fats": 73,
-    "Carbs": 1.3,
-    "Price": 60,
-    "AllowedDiets": ["Vegetarian", "Protein", "Glutenfree", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\maslo.jpg"
+    "Name": "Вершк. масло 73%, 180гр",
+    "Calories": 1330,
+    "Proteins": 1.6,
+    "Fats": 146,
+    "Carbs": 2.6,
+    "Price": 120,
+    "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\maslo.jpg",
+    "Unit": "Pieces"
   },
   {
     "Category": "Bread",
-    "Name": "Гречаний хліб",
-    "Calories": 248,
-    "Proteins": 10,
-    "Fats": 3.4,
-    "Carbs": 49,
-    "Price": 12.9,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\khleb-grechnevyj.jpg"
+    "Name": "Гречаний хліб, 500гр",
+    "Calories": 1240,
+    "Proteins": 50,
+    "Fats": 17,
+    "Carbs": 245,
+    "Price": 48,
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\khleb-grechnevyj.jpg",
+    "Unit": "Pieces"
   },
   {
     "Category": "Bread",
-    "Name": "Цільнозерновий Хліб",
-    "Calories": 237,
-    "Proteins": 13,
-    "Fats": 3.3,
-    "Carbs": 41,
-    "Price": 10.8,
-    "AllowedDiets": ["Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\czelnozernovoj.webp"
+    "Name": "Цільнозерн. хліб, 500гр",
+    "Calories": 1185,
+    "Proteins": 65,
+    "Fats": 16.5,
+    "Carbs": 205,
+    "Price": 54,
+    "AllowedDiets": [ "Vegetarian", "Vegan", "Plant", "Interval", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\czelnozernovoj.webp",
+    "Unit": "Pieces"
   },
   {
     "Category": "Meat",
@@ -579,8 +621,9 @@
     "Fats": 2,
     "Carbs": 0.4,
     "Price": 20.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\fillet.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\fillet.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Meat",
@@ -590,8 +633,9 @@
     "Fats": 16.3,
     "Carbs": 0.1,
     "Price": 14.1,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\hips.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\hips.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Meat",
@@ -601,19 +645,9 @@
     "Fats": 4.2,
     "Carbs": 0.2,
     "Price": 12.4,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\liver.png"
-  },
-  {
-    "Category": "Meat",
-    "Name": "Курячі гомілки",
-    "Calories": 198,
-    "Proteins": 18.2,
-    "Fats": 18.4,
-    "Carbs": 0,
-    "Price": 10.4,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\mages\\shins.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\liver.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Meat",
@@ -623,8 +657,9 @@
     "Fats": 8,
     "Carbs": 0,
     "Price": 19.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\farsh.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\farsh.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Meat",
@@ -634,8 +669,9 @@
     "Fats": 21.2,
     "Carbs": 0,
     "Price": 17.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\farsh2.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\farsh2.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Meat",
@@ -645,8 +681,9 @@
     "Fats": 22.8,
     "Carbs": 0,
     "Price": 34.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\collar.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\collar.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Meat",
@@ -656,8 +693,9 @@
     "Fats": 9.1,
     "Carbs": 0.1,
     "Price": 70.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tenderloin.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tenderloin.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Fish",
@@ -667,8 +705,9 @@
     "Fats": 0.1,
     "Carbs": 0,
     "Price": 40.8,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\steak.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\steak.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Fish",
@@ -678,8 +717,9 @@
     "Fats": 19.5,
     "Carbs": 0,
     "Price": 16.4,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\herring1.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\herring1.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Fish",
@@ -689,8 +729,9 @@
     "Fats": 1,
     "Carbs": 0,
     "Price": 48.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\dorado.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\dorado.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Fish",
@@ -700,8 +741,9 @@
     "Fats": 3,
     "Carbs": 0,
     "Price": 52.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\sibas.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\sibas.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Fish",
@@ -711,8 +753,9 @@
     "Fats": 0.8,
     "Carbs": 0,
     "Price": 39.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\krevetku.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\krevetku.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Fish",
@@ -722,8 +765,9 @@
     "Fats": 2.1,
     "Carbs": 0,
     "Price": 87.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\forel.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\forel.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Fish",
@@ -733,51 +777,56 @@
     "Fats": 0.7,
     "Carbs": 0,
     "Price": 71.9,
-    "AllowedDiets": ["Keto", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tuna.png"
+    "AllowedDiets": [ "Keto", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tuna.png",
+    "Unit": "Grams"
   },
   {
     "Category": "Drink",
-    "Name": "Сік",
-    "Calories": 54,
-    "Proteins": 1.1,
-    "Fats": 0.1,
-    "Carbs": 10,
-    "Price": 9.4,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\soksandoramultivitamin.jpg"
+    "Name": "Сік, 1л.",
+    "Calories": 490,
+    "Proteins": 2,
+    "Fats": 0,
+    "Carbs": 131,
+    "Price": 88,
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\soksandoramultivitamin.jpg",
+    "Unit": "Pieces"
   },
   {
     "Category": "Drink",
-    "Name": "Солодкі напої",
-    "Calories": 42,
+    "Name": "Солодкі напої, 1л.",
+    "Calories": 420,
     "Proteins": 0,
     "Fats": 0,
-    "Carbs": 10.6,
-    "Price": 5.4,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\pepsi.webp"
+    "Carbs": 106,
+    "Price": 46,
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\pepsi.webp",
+    "Unit": "Pieces"
   },
   {
     "Category": "Drink",
-    "Name": "Вода мін. нег.",
+    "Name": "Вода мін. нег., 1л.",
+    "Calories": 10,
+    "Proteins": 0,
+    "Fats": 0,
+    "Carbs": 1,
+    "Price": 23,
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\negaz2.webp",
+    "Unit": "Pieces"
+  },
+  {
+    "Category": "Drink",
+    "Name": "Вода мін. газ., 1л.",
     "Calories": 1,
     "Proteins": 0,
     "Fats": 0,
-    "Carbs": 0.1,
-    "Price": 2.3,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\negaz2.webp"
-  },
-  {
-    "Category": "Drink",
-    "Name": "Вода мін. газ.",
-    "Calories": 0.1,
-    "Proteins": 0,
-    "Fats": 0,
     "Carbs": 0,
-    "Price": 2.5,
-    "AllowedDiets": ["Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None"],
-    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\gaz.png"
+    "Price": 25,
+    "AllowedDiets": [ "Keto", "Vegetarian", "Vegan", "Plant", "Glutenfree", "Interval", "Protein", "Diet", "None" ],
+    "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\gaz.png",
+    "Unit": "Pieces"
   }
 ]

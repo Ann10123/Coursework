@@ -17,6 +17,8 @@ namespace Kursach
         public double Price { get; set; }
         public List<DietType> AllowedDiets { get; set; } = new List<DietType> { DietType.None };
         public string ImagePath { get; set; }
+        public UnitProduct Unit { get; set; } = UnitProduct.Grams;
         public double SelectedWeight { get; set; }
+        public string Units => Unit == UnitProduct.Grams ? "гр" : "шт";
     }
 }

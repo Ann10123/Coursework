@@ -87,11 +87,13 @@ namespace Kursach
 
             var comboBox = new ComboBox
             {
-                Width = 260,
+                Width = 280,
                 Height = 75,
                 Margin = new Thickness(0, 0, 0, 0),
                 Background = Brushes.White,
                 Foreground = Brushes.Black,
+                FontStyle = FontStyles.Italic,
+                BorderBrush = Brushes.Gray,
                 ItemsSource = collectionView,
                 ItemTemplate = FindResource("ProductTemplate") as DataTemplate
             };
@@ -119,17 +121,23 @@ namespace Kursach
             comboBox.GroupStyle.Add(groupStyle);
             var minText = new TextBox
             {
-                Width = 100, Height = 25, Margin = new Thickness(40, 0, 0, 0),
+                Width = 100, Height = 25, BorderThickness = new Thickness(2),
+                BorderBrush = Brushes.Gray,
+                FontStyle = FontStyles.Italic, Margin = new Thickness(50, 0, 0, 0),
             };
             minText.PreviewTextInput += NumberOnly_PreviewTextInput;
             var maxText = new TextBox
             {
-                Width = 100, Height = 25, Margin = new Thickness(90, 0, 0, 0),
+                Width = 100, Height = 25, BorderThickness = new Thickness(2),
+                BorderBrush = Brushes.Gray,
+                FontStyle = FontStyles.Italic, Margin = new Thickness(100, 0, 0, 0),
             };
             maxText.PreviewTextInput += NumberOnly_PreviewTextInput;
             var deleteButton = new Button
             {
-                Content = "❌", Width = 25, Height = 25, Margin = new Thickness(50, 0, 0, 0)
+                Content = "❌", Width = 25, Height = 25, Background = Brushes.White, BorderBrush=Brushes.Red,
+                BorderThickness = new Thickness(2), Foreground= Brushes.Red, Margin = new Thickness(50, 0, 0, 0)
+
             };
             deleteButton.Click += (s, ev) => ProductListPanel.Children.Remove(row);
 
@@ -221,35 +229,92 @@ namespace Kursach
                     double fatsLeft = maxFats - totalFats;
                     double carbsLeft = maxCarbs - totalCarbs;
 
-                    // Обчислити максимально допустиму кількість в межах КБЖВ
-                    double maxByCal = product.Calories > 0 ? calLeft / product.Calories * 100 : selection.MaxGramsPerDay;
-                    double maxByProt = product.Proteins > 0 ? protLeft / product.Proteins * 100 : selection.MaxGramsPerDay;
-                    double maxByFats = product.Fats > 0 ? fatsLeft / product.Fats * 100 : selection.MaxGramsPerDay;
-                    double maxByCarbs = product.Carbs > 0 ? carbsLeft / product.Carbs * 100 : selection.MaxGramsPerDay;
+                    // Пропонуємо середню вагу
+                    double avgGrams = (selection.MinGramsPerDay + selection.MaxGramsPerDay) / 2.0;
 
-                    // Вибрати максимально можливу вагу, що не перевищує max і не менше min
-                    double selectedGrams = Math.Min(Math.Min(maxByCal, maxByProt), Math.Min(maxByFats, maxByCarbs));
+                    double selectedGrams;
+                    if (product.Unit == UnitProduct.Pieces)
+                    {
+                        // Округлення до найближчого цілого у межах
+                        int min = (int)Math.Ceiling(selection.MinGramsPerDay);
+                        int max = (int)Math.Floor(selection.MaxGramsPerDay);
+
+                        int avg = (int)Math.Round((selection.MinGramsPerDay + selection.MaxGramsPerDay) / 2.0);
+
+                        selectedGrams = Math.Clamp(avg, min, max);
+
+                        // Враховуємо КБЖУ
+                        double calImpact = product.Calories * selectedGrams;
+                        double protImpact = product.Proteins * selectedGrams;
+                        double fatsImpact = product.Fats * selectedGrams;
+                        double carbsImpact = product.Carbs * selectedGrams;
+
+                        bool fits = calImpact <= calLeft &&
+                                    protImpact <= protLeft &&
+                                    fatsImpact <= fatsLeft &&
+                                    carbsImpact <= carbsLeft;
+                        if (!fits)
+                        {
+                            // Спробувати знайти менше ціле значення, яке вписується
+                            bool found = false;
+                            for (int val = (int)selectedGrams - 1; val >= min; val--)
+                            {
+                                calImpact = product.Calories * val;
+                                protImpact = product.Proteins * val;
+                                fatsImpact = product.Fats * val;
+                                carbsImpact = product.Carbs * val;
+
+                                if (calImpact <= calLeft &&
+                                    protImpact <= protLeft &&
+                                    fatsImpact <= fatsLeft &&
+                                    carbsImpact <= carbsLeft)
+                                {
+                                    selectedGrams = val;
+                                    found = true;
+                                    break;
+                                }
+                            }
+
+                            if (!found)
+                            {
+                                MessageBox.Show(
+                                    $"Продукт {product.Name} не може бути доданий у кількості цілих одиниць у межах КБЖУ.",
+                                    "⚠️ Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Вибрати максимально можливу вагу, що не перевищує залишки
+                        double maxByCal = product.Calories > 0 ? calLeft / product.Calories * 100 : selection.MaxGramsPerDay;
+                        double maxByProt = product.Proteins > 0 ? protLeft / product.Proteins * 100 : selection.MaxGramsPerDay;
+                        double maxByFats = product.Fats > 0 ? fatsLeft / product.Fats * 100 : selection.MaxGramsPerDay;
+                        double maxByCarbs = product.Carbs > 0 ? carbsLeft / product.Carbs * 100 : selection.MaxGramsPerDay;
+
+                        selectedGrams = Math.Min(Math.Min(maxByCal, maxByProt), Math.Min(maxByFats, maxByCarbs));
+                        selectedGrams = Math.Max(selection.MinGramsPerDay, Math.Min(selectedGrams, selection.MaxGramsPerDay)); // clamp
+                    }
+
+                    // Якщо не влазить навіть мінімум
                     if (selectedGrams < selection.MinGramsPerDay)
                     {
                         MessageBox.Show(
-                            $"Продукт {product.Name} не може бути доданий, оскільки його мінімальна кількість перевищує встановлені обмеження.",
-                            "Перевищення обмежень",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
+                            $"Продукт {product.Name} не може бути доданий, оскільки його мінімальна кількість перевищує залишки КБЖУ.",
+                            "⚠️ Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
                         continue;
                     }
-                    selectedGrams = Math.Clamp(selectedGrams, selection.MinGramsPerDay, selection.MaxGramsPerDay);
 
-                    double multiplier = selectedGrams / 100.0;
+                    double multiplier = product.Unit == UnitProduct.Grams ? selectedGrams / 100.0 : selectedGrams;
 
-                    totalPrice += product.Price * multiplier ;
+                    totalPrice += product.Price * multiplier;
                     totalCalories += product.Calories * multiplier;
                     totalProteins += product.Proteins * multiplier;
                     totalFats += product.Fats * multiplier;
                     totalCarbs += product.Carbs * multiplier;
 
-                    productList += $"- {product.Name} — {selectedGrams:F0} г/тижд\n";
+                    string unit = product.Unit == UnitProduct.Grams ? "г" : "шт";
+                    productList += $"- {product.Name} — {selectedGrams:F1} {unit}/тижд\n";
                     finalBasket.Add(product);
                 }
             }
@@ -272,30 +337,31 @@ namespace Kursach
                 .Where(p => _dietFilter.IsAllowed(p, _selectedDietType) && !_selectedProducts.Any(sel => sel.Product == p))
                 .ToList();
 
-            var lpProducts = SolveWithLinearProgramming(optionalProducts, minCalLeft, maxCalLeft, minProtLeft, 
+            var lpProducts = SolveWithLinearProgramming(optionalProducts, minCalLeft, maxCalLeft, minProtLeft,
                 maxProtLeft, minFatsLeft, maxFatsLeft, minCarbsLeft, maxCarbsLeft, maxCostLeft);
 
             foreach (var product in lpProducts)
             {
-                double multiplier = product.SelectedWeight / 100.0;
+                double multiplier = product.Unit == UnitProduct.Grams ? product.SelectedWeight / 100.0 : product.SelectedWeight;
                 totalPrice += product.Price * multiplier;
                 totalCalories += product.Calories * multiplier;
                 totalProteins += product.Proteins * multiplier;
                 totalFats += product.Fats * multiplier;
                 totalCarbs += product.Carbs * multiplier;
 
-                productList += $"- {product.Name} — {product.SelectedWeight:F0} г/тижд\n";
+                string unit = product.Unit == UnitProduct.Grams ? "г" : "шт";
+                productList += $"- {product.Name} — {product.SelectedWeight:F0} {unit}/тижд\n";
                 finalBasket.Add(product);
             }
             productList += $"\n📊 Загальні показники на тиждень:\n";
-            productList += $"- Калорій: {totalCalories:F2} ккал\n";
-            productList += $"- Жирів: {totalFats:F1} г\n";
+            productList += $"- Калорій: {totalCalories:F1} ккал\n";
             productList += $"- Білків: {totalProteins:F1} г\n";
+            productList += $"- Жирів: {totalFats:F1} г\n";
             productList += $"- Вуглеводів: {totalCarbs:F1} г\n";
             productList += $"\n💵 Загальна ціна: {totalPrice:F2} грн.";
 
             MessageBox.Show(productList, "🛍️ Сформований кошик:");
-            return finalBasket;  
+            return finalBasket;
         }
         public void AddMinConstraint(Solver solver, Dictionary<Product, Variable> variables, Func<Product, double> selector, double min)
         {
@@ -304,7 +370,8 @@ namespace Kursach
             LinearExpr expr = null;
             foreach (var kvp in variables)
             {
-                var term = kvp.Value * selector(kvp.Key) / 100.0;
+                double factor = kvp.Key.Unit == UnitProduct.Grams ? selector(kvp.Key) / 100.0 : selector(kvp.Key);
+                var term = kvp.Value * factor;
                 expr = expr == null ? term : expr + term;
             }
 
@@ -320,7 +387,8 @@ namespace Kursach
             LinearExpr expr = null;
             foreach (var kvp in variables)
             {
-                var term = kvp.Value * selector(kvp.Key) / 100.0;
+                double factor = kvp.Key.Unit == UnitProduct.Grams ? selector(kvp.Key) / 100.0 : selector(kvp.Key);
+                var term = kvp.Value * factor;
                 expr = expr == null ? term : expr + term;
             }
 
@@ -329,14 +397,14 @@ namespace Kursach
                 solver.Add(expr <= max);
             }
         }
-        public  List<Product> SolveWithLinearProgramming(List<Product> products,
+        public List<Product> SolveWithLinearProgramming(List<Product> products,
             double minCalLeft, double maxCalLeft,
             double minProtLeft, double maxProtLeft,
             double minFatsLeft, double maxFatsLeft,
             double minCarbsLeft, double maxCarbsLeft,
             double maxCostLeft)
         {
-            Solver solver = Solver.CreateSolver("GLOP");
+            Solver solver = Solver.CreateSolver("CBC_MIXED_INTEGER_PROGRAMMING");
             if (solver == null)
             {
                 MessageBox.Show("Не вдалося ініціалізувати OR-Tools солвер.");
@@ -346,9 +414,18 @@ namespace Kursach
             Dictionary<Product, Variable> variables = new();
 
             // Кожен продукт — змінна: скільки грамів додати
+
             foreach (var product in products)
             {
-                var variable = solver.MakeNumVar(0.0, double.PositiveInfinity, product.Name);
+                Variable variable;
+                if (product.Unit == UnitProduct.Pieces)
+                {
+                    variable = solver.MakeIntVar(0.0, double.PositiveInfinity, product.Name);
+                }
+                else
+                {
+                    variable = solver.MakeNumVar(0.0, double.PositiveInfinity, product.Name);
+                }
                 variables[product] = variable;
             }
 
@@ -371,7 +448,7 @@ namespace Kursach
             Objective objective = solver.Objective();
             foreach (var (product, variable) in variables)
             {
-                objective.SetCoefficient(variable, product.Price); 
+                objective.SetCoefficient(variable, product.Price);
             }
             objective.SetMinimization();
 
@@ -479,6 +556,11 @@ namespace Kursach
                     product.Price = item["Price"]?.ToObject<double>() ?? 0;
                     product.ImagePath = item["ImagePath"]?.ToString();
                     product.AllowedDiets = item["AllowedDiets"]?.ToObject<List<DietType>>() ?? new List<DietType>();
+                    product.Unit = item["Unit"]?.ToString()?.ToLower() switch
+                    {
+                        "pieces" or "piece" or "шт" => UnitProduct.Pieces,
+                        _ => UnitProduct.Grams
+                    };
                     product.SelectedWeight = 0;
 
                     productList.Add(product);
