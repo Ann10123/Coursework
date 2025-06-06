@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kursach
 {
-    public class SimpleDietFilter : IDietFilter
+    public class SimpleDietFilter : IDietFilter 
     {
         public bool IsAllowed(Product product, DietType diet)
         {

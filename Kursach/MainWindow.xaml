@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Kursach.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Продуктовий кошик 🛍️" Height="700" Width="750" Background="#d0f7fc">
+        Title="Продуктовий кошик 🛍️" Height="700" Width="815" Background="#d0f7fc">
 
     <Window.Resources>
         <DataTemplate x:Key="ProductTemplate">
@@ -37,6 +37,7 @@
                     <ComboBoxItem Content="діабетична"/>
                     <ComboBoxItem Content="білкова"/>
                 </ComboBox>
+                <Button Content="❓" Width="35" Height="30" Margin="450,5,0,0" VerticalAlignment="Top" BorderThickness="2" FontSize="15" BorderBrush="Red" Foreground="Red"  Background="White" Click="HelpButton_Click"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="0,0,0,10">
@@ -80,8 +81,8 @@
             <StackPanel Grid.Row="4" x:Name="ProductListPanel">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Продукт:" FontSize="18" FontStyle="Italic" Margin="20,0,20,0"/>
-                    <Label Content="Мін. к-сть (гр/шт):" FontSize="18" FontStyle="Italic" Margin="165,0,20,0"/>
-                    <Label Content="Макс. к-сть (гр/шт):" FontSize="18" FontStyle="Italic"/>
+                    <Label Content="Мін. к-сть (грам/шт):" FontSize="18" FontStyle="Italic" Margin="165,0,15,0"/>
+                    <Label Content="Макс. к-сть (грам/шт):" FontSize="18" FontStyle="Italic"/>
                 </StackPanel>
             </StackPanel>
 

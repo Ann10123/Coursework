@@ -19,6 +19,5 @@ namespace Kursach
         public string ImagePath { get; set; }
         public UnitProduct Unit { get; set; } = UnitProduct.Grams;
         public double SelectedWeight { get; set; }
-        public string Units => Unit == UnitProduct.Grams ? "гр" : "шт";
     }
 }

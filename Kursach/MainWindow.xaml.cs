@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.ComponentModel;
 
 namespace Kursach
 {
@@ -22,6 +23,7 @@ namespace Kursach
         public List<Product> _products;
         public List<ProductSelection> _selectedProducts = new();
         public DietType _selectedDietType = DietType.None;
+
         public IDietFilter _dietFilter = new SimpleDietFilter();
 
         public void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -77,6 +79,31 @@ namespace Kursach
             }
             return allFilled;
         }
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            string message = "Середні добові енерговитрати за версією МОЗ:\n\n" +
+                 "1. Для жінок 18-29 років з легкою фізичною активністю:\n" +
+                 "- калорії: 2000 \n" +
+                 "- білки: 61 \n" +
+                 "- жири: 62 \n" +
+                 "- вуглеводи: 300 \n\n" +
+                 "2. Для чоловіків 18-29 років з легкою фізичною активністю:\n" +
+                  "- калорії: 2450 \n" +
+                 "- білки: 80 \n" +
+                 "- жири: 81 \n" +
+                 "- вуглеводи: 350 \n\n" +
+                 "Більш детальну інформацію можна знайти за посиланням: https://zakon.rada.gov.ua/laws/show/z1206-17/page#Text";
+            var result = MessageBox.Show(message + "\n\nВідкрити сайт зараз?", "ℹ️ Довідка", MessageBoxButton.YesNo, MessageBoxImage.Information);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://zakon.rada.gov.ua/laws/show/z1206-17/page#Text",
+                    UseShellExecute = true
+                });
+            }
+        }
         //додавання полів для обов'язкових продуктів
         public void AddProductBox_Click(object sender, RoutedEventArgs e)
         {
@@ -93,10 +120,12 @@ namespace Kursach
                 Background = Brushes.White,
                 Foreground = Brushes.Black,
                 FontStyle = FontStyles.Italic,
+                BorderThickness = new Thickness(2),
                 BorderBrush = Brushes.Gray,
                 ItemsSource = collectionView,
                 ItemTemplate = FindResource("ProductTemplate") as DataTemplate
             };
+            comboBox.SelectedIndex = -1;
             // Додаємо стиль заголовків категорій
             var borderFactory = new FrameworkElementFactory(typeof(Border));
             borderFactory.SetValue(Border.BorderBrushProperty, Brushes.Black);
@@ -123,20 +152,20 @@ namespace Kursach
             {
                 Width = 100, Height = 25, BorderThickness = new Thickness(2),
                 BorderBrush = Brushes.Gray,
-                FontStyle = FontStyles.Italic, Margin = new Thickness(50, 0, 0, 0),
+                FontStyle = FontStyles.Italic, Margin = new Thickness(65, 0, 0, 0),
             };
             minText.PreviewTextInput += NumberOnly_PreviewTextInput;
             var maxText = new TextBox
             {
                 Width = 100, Height = 25, BorderThickness = new Thickness(2),
                 BorderBrush = Brushes.Gray,
-                FontStyle = FontStyles.Italic, Margin = new Thickness(100, 0, 0, 0),
+                FontStyle = FontStyles.Italic, Margin = new Thickness(110, 0, 0, 0),
             };
             maxText.PreviewTextInput += NumberOnly_PreviewTextInput;
             var deleteButton = new Button
             {
                 Content = "❌", Width = 25, Height = 25, Background = Brushes.White, BorderBrush=Brushes.Red,
-                BorderThickness = new Thickness(2), Foreground= Brushes.Red, Margin = new Thickness(50, 0, 0, 0)
+                BorderThickness = new Thickness(2), Foreground= Brushes.Red, Margin = new Thickness(75, 0, 0, 0)
 
             };
             deleteButton.Click += (s, ev) => ProductListPanel.Children.Remove(row);
@@ -314,7 +343,7 @@ namespace Kursach
                     totalCarbs += product.Carbs * multiplier;
 
                     string unit = product.Unit == UnitProduct.Grams ? "г" : "шт";
-                    productList += $"- {product.Name} — {selectedGrams:F1} {unit}/тижд\n";
+                    productList += $"- {product.Name} — {selectedGrams:F0} {unit}/тижд\n";
                     finalBasket.Add(product);
                 }
             }
@@ -414,7 +443,6 @@ namespace Kursach
             Dictionary<Product, Variable> variables = new();
 
             // Кожен продукт — змінна: скільки грамів додати
-
             foreach (var product in products)
             {
                 Variable variable;
@@ -445,6 +473,7 @@ namespace Kursach
             AddMaxConstraint(solver, variables, p => p.Price, maxCostLeft);
 
             // Мінімізація вартості
+
             Objective objective = solver.Objective();
             foreach (var (product, variable) in variables)
             {
@@ -460,7 +489,7 @@ namespace Kursach
                 foreach (var (product, variable) in variables)
                 {
                     double grams = variable.SolutionValue();
-                    if (grams >= 0.1)
+                    if (grams >= 1)
                     {
                         product.SelectedWeight = grams;
                         result.Add(product);
@@ -561,7 +590,7 @@ namespace Kursach
                         "pieces" or "piece" or "шт" => UnitProduct.Pieces,
                         _ => UnitProduct.Grams
                     };
-                    product.SelectedWeight = 0;
+                    product.SelectedWeight = -1;
 
                     productList.Add(product);
                 }

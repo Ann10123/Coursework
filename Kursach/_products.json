@@ -519,7 +519,7 @@
   },
   {
     "Category": "Milk",
-    "Name": "Кисломолочний сир 5%",
+    "Name": "Кисломолочний сир 5%, 500гр",
     "Calories": 84,
     "Proteins": 18,
     "Fats": 0.6,
@@ -527,7 +527,7 @@
     "Price": 26.8,
     "AllowedDiets": [ "Vegetarian", "Protein", "Glutenfree", "None" ],
     "ImagePath": "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\Images\\tvorog-kislomolochnyj.jpg",
-    "Unit": "Grams"
+    "Unit": "Pieces"
   },
   {
     "Category": "Milk",
