@@ -1,157 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Kursach.Product">
+  <Class Name="ProductBasket.Product">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAQAAAAEAIAAAAJwCAAAAABAAAAAAAAAACAA=</HashCode>
       <FileName>Product.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.ProductSelection">
+  <Class Name="ProductBasket.ProductSelection">
     <Position X="0.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEAA=</HashCode>
       <FileName>ProductSelection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Vegetables">
+  <Class Name="ProductBasket.Vegetables">
     <Position X="2.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Fruits">
+  <Class Name="ProductBasket.Fruits">
     <Position X="7.75" Y="0.5" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2" Y="4.562" />
-        <Point X="7.938" Y="4.562" />
-        <Point X="7.938" Y="1.733" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Сereals">
+  <Class Name="ProductBasket.Сereals">
     <Position X="6" Y="0.5" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2" Y="3.562" />
-        <Point X="2" Y="2.362" />
-        <Point X="6.812" Y="2.362" />
-        <Point X="6.812" Y="1.733" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Seed">
+  <Class Name="ProductBasket.Seed">
     <Position X="2.75" Y="2.5" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" FixedFromPoint="true">
-      <Path>
-        <Point X="2" Y="3.75" />
-        <Point X="2.375" Y="3.75" />
-        <Point X="2.375" Y="3.116" />
-        <Point X="2.75" Y="3.116" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Nuts">
+  <Class Name="ProductBasket.Nuts">
     <Position X="4.5" Y="2.5" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2" Y="4" />
-        <Point X="5.375" Y="4" />
-        <Point X="5.375" Y="3.733" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Sweets">
+  <Class Name="ProductBasket.Sweets">
     <Position X="4.25" Y="0.5" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" ManuallyRouted="true" FixedFromPoint="true">
-      <Path>
-        <Point X="1.625" Y="3.5" />
-        <Point X="1.625" Y="2.15" />
-        <Point X="5" Y="2.15" />
-        <Point X="5" Y="1.733" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Milk">
+  <Class Name="ProductBasket.Milk">
     <Position X="6.25" Y="4.75" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2" Y="6.375" />
-        <Point X="6.938" Y="6.375" />
-        <Point X="6.938" Y="5.983" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Bread">
+  <Class Name="ProductBasket.Bread">
     <Position X="6.25" Y="2.5" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2" Y="4.25" />
-        <Point X="7" Y="4.25" />
-        <Point X="7" Y="3.733" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Meat">
+  <Class Name="ProductBasket.Meat">
     <Position X="2.5" Y="0.5" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="1.188" Y="3.5" />
-        <Point X="1.188" Y="1.886" />
-        <Point X="3.25" Y="1.886" />
-        <Point X="3.25" Y="1.733" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.Fish">
+  <Class Name="ProductBasket.Fish">
     <Position X="4.5" Y="4.75" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2" Y="6.125" />
-        <Point X="5.438" Y="6.125" />
-        <Point X="5.438" Y="5.983" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Kursach.MainWindow">
+  <Class Name="ProductBasket.MainWindow">
     <Position X="8.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACDAAAQABAAQAAAMARAAEAEAAAAAAAAYgAAAAAAAA=</HashCode>
@@ -159,7 +92,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Kursach.SimpleDietFilter">
+  <Class Name="ProductBasket.SimpleDietFilter">
     <Position X="6.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
@@ -167,34 +100,28 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Kursach.Drink">
+  <Class Name="ProductBasket.Drink">
     <Position X="0.5" Y="0.5" Width="1.5" />
-    <InheritanceLine Type="Kursach.Product" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="0.875" Y="3.5" />
-        <Point X="0.875" Y="1.733" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>ProductTypes.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="Kursach.IDietFilter">
+  <Interface Name="ProductBasket.IDietFilter">
     <Position X="4.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>IDietFilter.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="Kursach.DietType">
+  <Enum Name="ProductBasket.DietType">
     <Position X="2.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAABAAAAAAAAAIAAgAAAAAAAAIAAAAgAACEAAgA=</HashCode>
       <FileName>DietType.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="Kursach.UnitProduct">
+  <Enum Name="ProductBasket.UnitProduct">
     <Position X="8.25" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>

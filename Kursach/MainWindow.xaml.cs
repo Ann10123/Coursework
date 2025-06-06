@@ -1,6 +1,6 @@
 using System.IO;
 using Google.OrTools.LinearSolver;
-using Kursach;
+using ProductBasket;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.ComponentModel;
 
-namespace Kursach
+namespace ProductBasket
 {
     public partial class MainWindow : Window
     {

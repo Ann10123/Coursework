@@ -1,4 +1,4 @@
-﻿<Window x:Class="Kursach.MainWindow"
+﻿<Window x:Class="ProductBasket.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Продуктовий кошик 🛍️" Height="700" Width="815" Background="#d0f7fc">

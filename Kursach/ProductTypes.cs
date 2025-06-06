@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kursach
+namespace ProductBasket
 {
     public class Vegetables : Product { public override string Category => "Овочі"; }
     public class Fruits : Product { public override string Category => "Фрукти"; }

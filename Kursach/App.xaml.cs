@@ -8,7 +8,7 @@ using System.Windows;
 using System.Globalization;
 using System.Threading;
 
-namespace Kursach
+namespace ProductBasket
 {
     /// <summary>
     /// Interaction logic for App.xaml
