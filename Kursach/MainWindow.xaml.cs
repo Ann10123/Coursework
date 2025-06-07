@@ -28,7 +28,6 @@ namespace ProductBasket
 
         public void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            //Дозволяє на введення лише цифр і коми
             Regex regex = new Regex("[^0-9,]");
             var textBox = sender as TextBox;
             string currentText = textBox?.Text ?? "";
@@ -38,7 +37,6 @@ namespace ProductBasket
                 e.Handled = true;
                 return;
             }
-            // Перевірка на наявність коми
             if (e.Text == ",")
             {
                 if (currentText.Contains(","))
@@ -48,7 +46,6 @@ namespace ProductBasket
                 }
             }
         }
-        //перевірка на порожні поля
         public bool AreAllTextBoxesFilled(DependencyObject parent)
         {
             bool allFilled = true;
@@ -104,7 +101,6 @@ namespace ProductBasket
                 });
             }
         }
-        //додавання полів для обов'язкових продуктів
         public void AddProductBox_Click(object sender, RoutedEventArgs e)
         {
             var row = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
@@ -126,7 +122,7 @@ namespace ProductBasket
                 ItemTemplate = FindResource("ProductTemplate") as DataTemplate
             };
             comboBox.SelectedIndex = -1;
-            // Додаємо стиль заголовків категорій
+
             var borderFactory = new FrameworkElementFactory(typeof(Border));
             borderFactory.SetValue(Border.BorderBrushProperty, Brushes.Black);
             borderFactory.SetValue(Border.BorderThicknessProperty, new Thickness(1));
@@ -243,7 +239,6 @@ namespace ProductBasket
 
             string productList = "Включає такі продукти:\n";
 
-            //обрахунок обов'язкових продуктів
             foreach (var selection in _selectedProducts)
             {
                 var product = selection.Product;
@@ -252,19 +247,16 @@ namespace ProductBasket
                     selection.MinGramsPerDay >= 0 &&
                     selection.MaxGramsPerDay >= selection.MinGramsPerDay)
                 {
-                    // Залишки КБЖВ
                     double calLeft = maxCal - totalCalories;
                     double protLeft = maxProt - totalProteins;
                     double fatsLeft = maxFats - totalFats;
                     double carbsLeft = maxCarbs - totalCarbs;
 
-                    // Пропонуємо середню вагу
                     double avgGrams = (selection.MinGramsPerDay + selection.MaxGramsPerDay) / 2.0;
 
                     double selectedGrams;
                     if (product.Unit == UnitProduct.Pieces)
                     {
-                        // Округлення до найближчого цілого у межах
                         int min = (int)Math.Ceiling(selection.MinGramsPerDay);
                         int max = (int)Math.Floor(selection.MaxGramsPerDay);
 
@@ -272,7 +264,6 @@ namespace ProductBasket
 
                         selectedGrams = Math.Clamp(avg, min, max);
 
-                        // Враховуємо КБЖУ
                         double calImpact = product.Calories * selectedGrams;
                         double protImpact = product.Proteins * selectedGrams;
                         double fatsImpact = product.Fats * selectedGrams;
@@ -284,7 +275,6 @@ namespace ProductBasket
                                     carbsImpact <= carbsLeft;
                         if (!fits)
                         {
-                            // Спробувати знайти менше ціле значення, яке вписується
                             bool found = false;
                             for (int val = (int)selectedGrams - 1; val >= min; val--)
                             {
@@ -315,7 +305,6 @@ namespace ProductBasket
                     }
                     else
                     {
-                        // Вибрати максимально можливу вагу, що не перевищує залишки
                         double maxByCal = product.Calories > 0 ? calLeft / product.Calories * 100 : selection.MaxGramsPerDay;
                         double maxByProt = product.Proteins > 0 ? protLeft / product.Proteins * 100 : selection.MaxGramsPerDay;
                         double maxByFats = product.Fats > 0 ? fatsLeft / product.Fats * 100 : selection.MaxGramsPerDay;
@@ -324,8 +313,6 @@ namespace ProductBasket
                         selectedGrams = Math.Min(Math.Min(maxByCal, maxByProt), Math.Min(maxByFats, maxByCarbs));
                         selectedGrams = Math.Max(selection.MinGramsPerDay, Math.Min(selectedGrams, selection.MaxGramsPerDay)); // clamp
                     }
-
-                    // Якщо не влазить навіть мінімум
                     if (selectedGrams < selection.MinGramsPerDay)
                     {
                         MessageBox.Show(
@@ -347,7 +334,6 @@ namespace ProductBasket
                     finalBasket.Add(product);
                 }
             }
-            // Обчислення залишків для LP
             double minCalLeft = Math.Max(0, minCal - totalCalories);
             double maxCalLeft = Math.Max(0, maxCal - totalCalories);
 
@@ -442,7 +428,6 @@ namespace ProductBasket
 
             Dictionary<Product, Variable> variables = new();
 
-            // Кожен продукт — змінна: скільки грамів додати
             foreach (var product in products)
             {
                 Variable variable;
@@ -456,8 +441,6 @@ namespace ProductBasket
                 }
                 variables[product] = variable;
             }
-
-            // Всі обмеження
             AddMinConstraint(solver, variables, p => p.Calories, minCalLeft);
             AddMaxConstraint(solver, variables, p => p.Calories, maxCalLeft);
 
@@ -471,8 +454,6 @@ namespace ProductBasket
             AddMaxConstraint(solver, variables, p => p.Carbs, maxCarbsLeft);
 
             AddMaxConstraint(solver, variables, p => p.Price, maxCostLeft);
-
-            // Мінімізація вартості
 
             Objective objective = solver.Objective();
             foreach (var (product, variable) in variables)
@@ -559,7 +540,6 @@ namespace ProductBasket
             var json = File.ReadAllText(file);
             var productList = new List<Product>();
 
-            // Завантаження JSON
             var items = JsonConvert.DeserializeObject<List<JObject>>(json);
 
             foreach (var item in items)
@@ -567,13 +547,18 @@ namespace ProductBasket
                 string category = item["Category"]?.ToString();
                 Product product = category switch
                 {
-                    "Vegetables" => new Vegetables(), "Fruits" => new Fruits(),
-                    "Сereals" => new Сereals(), "Seed" => new Seed(),
-                    "Nuts" => new Nuts(), "Sweets" => new Sweets(),
-                    "Milk" => new Milk(), "Bread" => new Bread(),
-                    "Meat" => new Meat(), "Fish" => new Fish(),
+                    "Vegetables" => new Vegetables(),
+                    "Fruits" => new Fruits(),
+                    "Cereals" => new Cereals(),
+                    "Seed" => new Seed(),
+                    "Nuts" => new Nuts(),
+                    "Sweets" => new Sweets(),
+                    "Milk" => new Milk(),
+                    "Bread" => new Bread(),
+                    "Meat" => new Meat(),
+                    "Fish" => new Fish(),
                     "Drink" => new Drink(),
-                    _ => null
+                    _ => throw new ArgumentException($"Unknown category: {category}")
                 };
                 if (product != null)
                 {
@@ -583,7 +568,11 @@ namespace ProductBasket
                     product.Fats = item["Fats"]?.ToObject<double>() ?? 0;
                     product.Carbs = item["Carbs"]?.ToObject<double>() ?? 0;
                     product.Price = item["Price"]?.ToObject<double>() ?? 0;
-                    product.ImagePath = item["ImagePath"]?.ToString();
+                    string relativePath = item["ImagePath"]?.ToString();
+                    if (!string.IsNullOrEmpty(relativePath))
+                    {
+                        product.ImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+                    }
                     product.AllowedDiets = item["AllowedDiets"]?.ToObject<List<DietType>>() ?? new List<DietType>();
                     product.Unit = item["Unit"]?.ToString()?.ToLower() switch
                     {
@@ -601,13 +590,8 @@ namespace ProductBasket
         {
             InitializeComponent();
 
-            string file = "C:\\Users\\06028\\source\\repos\\Kursach\\Kursach\\_products.json";
+            string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "_products.json");
             _products = Product(file);
         }
     }
 }
-
-
-
-
-

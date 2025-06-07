@@ -8,7 +8,7 @@ namespace ProductBasket
 {
     public class Vegetables : Product { public override string Category => "Овочі"; }
     public class Fruits : Product { public override string Category => "Фрукти"; }
-    public class Сereals : Product { public override string Category => "Крупи"; }
+    public class Cereals: Product { public override string Category => "Крупи"; }
     public class Seed : Product { public override string Category => "Насіння"; }
     public class Nuts : Product { public override string Category => "Горіхи"; }
     public class Sweets : Product { public override string Category => "Солодощі"; }
